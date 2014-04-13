@@ -1,0 +1,32 @@
+<?php
+$shout = $this->shout;
+$delta = time() - $shout['time'];
+$time['m'] = intval($delta / 2592000);
+$delta -= $time['m'] * 2592000;
+$time['d'] = intval($delta / 86400);
+$delta -= $time['d'] * 86400;
+$time['h'] = intval($delta / 3600);
+$delta -= $time['h'] * 3600;
+$time['i'] = intval($delta / 60);
+$delta -= $time['i'] * 60;
+$time['s'] = $delta;
+if ($time['s'] < 1) $time = null;
+else {
+	if ($time['m']) $time = $time['m'] . ($time['m'] != 1 ? ' months' : ' month');
+	else if ($time['d']) $time = $time['d'] . ($time['d'] != 1 ? ' days' : ' day');
+	else if ($time['h']) $time = $time['h'] . ($time['h'] != 1 ? ' hours' : ' hour');
+	else if ($time['i']) $time = $time['i'] . ($time['i'] != 1 ? ' minutes' : ' minute');
+	else $time = $time['s'] . ' seconds';
+	
+	$time = ", $time ago";
+}
+$text = stripslashes($shout['text']);
+echo <<<EOHTML
+<section>
+<p>"{$text}"</p>
+<footer>
+<span class={$shout['class']}>{$shout['name']}</span>$time
+</footer>
+</section>
+EOHTML;
+?>

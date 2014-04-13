@@ -1,0 +1,181 @@
+<?php
+echo "<table id='char-talents'><thead><tr>";
+foreach ($this->talents['talent']['trees'] as $tree => $tre)
+{
+	echo "<th><img class='wow-icon' src='http://us.media.blizzard.com/wow/icons/18/$tre[ICON].jpg'/><br/>$tre[POINTS] &mdash; $tre[NAME]</th>";
+}
+echo "</tr></thead><tbody><tr>";
+foreach ($this->talents['talent']['trees'] as $tree => $tre)
+{
+	//print_r($tre);
+	echo '<td class="tal-tree" style="background-image: url(\'http://static.mmo-champion.com/db/img/wowtal/backgrounds/'.$tre['BACKGROUND'].'.png\')"><table width="100%"><tbody>';
+
+	//for ($start;$start<=$stop;$start++)
+	for( $r = 1; $r < 7 + 1; $r++ )
+	{
+		echo '<tr>';
+		for( $c = 1; $c < 4 + 1; $c++ )
+		{
+			if (isset($tre['talents'][$r][$c]['RANK']))
+			{
+				if ($tre['talents'][$r][$c]['RANK'] == 0)
+				{
+					$class = 'tal-empty';
+				} else if ($tre['talents'][$r][$c]['S_MAX'])
+				{
+					$class = 'tal-maxed';
+				} else
+				{
+					$class = 'tal-some';
+				}
+				echo "<td class='$class'>";
+				$name = ($tre['talents'][$r][$c]['NAME']);
+				$tooltip = nl2br(preg_replace('/(?:(?:\r\n|\r|\n)\s*){2}/s', "\n\n",$tre['talents'][$r][$c]['TOOLTIP']));
+				echo "<img class='wow-icon' title=\"{$name}\" rel=\"{$tooltip}\" src='http://us.media.blizzard.com/wow/icons/36/{$tre['talents'][$r][$c]['ICON']}.jpg' width='32' height='32'></a><div class='tal-rank'>{$tre['talents'][$r][$c]['RANK']}</div>";
+			} else {
+				echo '<td>';
+			}
+			echo '</td>';
+		}
+		echo '</tr>';
+	}
+	echo '</tbody></table></td>';
+}
+echo <<<EOHTML
+	</tbody>
+</table>
+<table id='char-glyphs'>
+	<thead>
+		<tr>
+			<th>Prime</th>
+			<th>Major</th>
+			<th>Minor</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<table>
+					<tbody>
+EOHTML;
+foreach ($this->glyphs['prime'] as $glyph)
+{
+	$url = "http://www.wowhead.com/item=$glyph[item]";
+	echo <<<EOHTML
+		<tr>
+			<td><a href='$url'><img class='wow-icon' src='http://us.media.blizzard.com/wow/icons/36/$glyph[icon].jpg'/></a></td>
+			<td><a href='$url'>$glyph[name]</a></td>
+		</tr>
+EOHTML;
+}
+echo "</tbody></table></td><td><table><tbody>";
+foreach ($this->glyphs['major'] as $glyph)
+{
+	$url = "http://www.wowhead.com/item=$glyph[item]";
+	echo <<<EOHTML
+		<tr>
+			<td><a href='$url'><img class='wow-icon' src='http://us.media.blizzard.com/wow/icons/36/$glyph[icon].jpg'/></a></td>
+			<td><a href='$url'>$glyph[name]</a></td>
+		</tr>
+EOHTML;
+}
+echo "</tbody></table></td><td><table><tbody>";
+foreach ($this->glyphs['minor'] as $glyph)
+{
+	$url = "http://www.wowhead.com/item=$glyph[item]";
+	echo <<<EOHTML
+		<tr>
+			<td><a href='$url'><img class='wow-icon' src='http://us.media.blizzard.com/wow/icons/36/$glyph[icon].jpg'/></a></td>
+			<td><a href='$url'>$glyph[name]</a></td>
+		</tr>
+EOHTML;
+}
+echo "</tbody></table></td></tr></tbody></table>";
+?>
+<script>
+new Tips($$('#armory-talents table#char-talents tbody td img'),{className: 'tal-tip'});
+</script>
+<style>
+#char-glyphs {
+	width: 100%;
+}
+#char-glyphs > tbody > tr > td {
+	width: 33%;
+}
+#char-talents {
+	margin: 20px auto;
+	border: 2px outset #AAAAAA;
+}
+#char-talents > tbody > tr > td {
+	border: 1px inset #aaa;
+}
+#char-talents td {
+	padding: 0;
+	text-align: center;
+}
+.tal-tip {
+    max-width: 200px;
+    background: rgba(0,0,0,0.75);
+    padding: 10px;
+    border: 2px inset white;
+    border-radius: 10px;
+}
+.tip-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.tal-rank {
+    border: 2px outset white;
+    width: 14px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    background: black;
+    position: relative;
+    bottom: 14px;
+    left: 34px;
+    border-radius: 4px;
+}
+.tal-tree {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: transparent;
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-size: 241px 441px;
+    width: 241px;
+}
+#char-talents tbody tr td table tbody tr td.tal-empty img {
+	opacity: 0.5;
+}
+#char-talents tbody tr td table tbody tr td.tal-empty div {
+	color: gray;
+}
+#char-talents tbody tr td table tbody tr td.tal-some img {
+	border: 2px outset #0F0;
+}
+#char-talents tbody tr td table tbody tr td.tal-some div {
+	color: #0F0;
+}
+#char-talents tbody tr td table tbody tr td.tal-maxed img {
+	border: 2px outset #FFD700;
+}
+#char-talents tbody tr td table tbody tr td.tal-maxed div {
+	color: #FFD700;
+}
+#char-glyphs table tr:not(:first-child) td:nth-child(2) {
+    border-top: 1px inset #aaa;
+}
+#char-glyphs thead th {
+    padding: 20px 0 5px 13px;
+    text-align: left;
+    font-size: 14px;
+}
+#char-glyphs {
+    border-collapse: collapse;
+    border-top: 2px inset #0398FF;
+    margin-top: 20px;
+}
+</style>

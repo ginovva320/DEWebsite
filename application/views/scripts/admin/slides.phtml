@@ -1,0 +1,107 @@
+<section class='lift postframe'>
+	<header>
+		<h1><a href='<?php echo $this->url(array('controller' => 'admin'), null, true); ?>'>Admin</a>  &raquo;  Manage Slide</h1>
+	</header>
+	<article>
+		<p>
+			Drag and drop slides to rearrange their order. To edit or delete a slide, click on their respective buttons.
+		</p>
+		<form id=ss_form action='.' method=post >
+		<ul id=slidesortables>
+	<?php 
+	while ($slide = mysqli_fetch_array($this->slides)) {
+		$img = $this->baseUrl() . '/img/slideshow/slide_' . $slide['attachment_id'] . '.png';
+		$date = date('g:ia, M j Y', $slide['time']);
+		$url = $this->url(array('controller' => 'admin', 'action' => 'edit-slide', 'id' => $slide['id']), null, true);
+		echo <<<EOHTML
+			<li class=slide_sort title=$slide[id] >
+				<img src=$img />
+				<div class=de_button id=slide_$slide[id]_delete data=$slide[id] >X</div>
+				<div class=de_button><a href='$url'>EDIT</a></div>
+				<ul>
+					<li><strong>$slide[title]</strong></li>
+					<li>$slide[caption]</li>
+					<li>Posted by <span class=$slide[class]>$slide[name]</span> on $date</li>
+				</ul>
+			</li>
+EOHTML;
+		$order[] = $slide['id'];
+	}
+	?>
+		</ul>
+		<input type=hidden name=sort_order id=sort_order value="<?php echo implode(',',$order); ?>"/>
+		</form>
+	</article>
+</section>
+<?php 
+$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready',function() {
+	$$('li.slide_sort div.de_button[data]').addEvent('click',function(e){
+		e.stop();
+		if (confirm('Are you sure you want to delete this slide?')) {
+			url = baseUrl + '/admin/delete-slide';
+			new Request({
+				url: url,
+				method: 'post',
+				data: 'id=' + this.get('data'),
+				onSuccess: function() {
+					window.location.reload();
+				}
+			}).send();
+		}
+	});
+});
+window.addEvent('domready', function() {
+  /* grab important elements */
+  var sortInput = $('sort_order');
+  var list = $('slidesortables');
+  
+  /* get the request object ready;  re-use the same Request */
+  var request = new Request({
+    url: '{$_SERVER['REQUEST_URI']}',
+    link: 'cancel',
+    method: 'post',
+    onRequest: function() {
+      DEmessenger('Updating the sort order in the database');
+    },
+    onSuccess: function() {
+      DEmessenger('Database has been updated','The slideshow on your page will be updated when your page is refreshed.');
+    }
+  });
+  /* worker function */
+  var fnSubmit = function(save) {
+    var sortOrder = [];
+    list.getChildren('li').each(function(li) {
+      sortOrder.push(li.retrieve('id'));
+    });
+    sortInput.value = sortOrder.join(',');
+    if(save) {
+      request.send('sort_order=' + sortInput.value);
+    }
+  };
+  
+  /* store values */
+  list.getElements('li').each(function(li) {
+    li.store('id',li.get('title')).set('title','');
+  });
+  
+  /* sortables that also *may* */
+  new Sortables(list,{
+    constrain: true,
+    clone: true,
+    revert: true,
+    onComplete: function(el,clone) {
+      fnSubmit(true);
+    }
+  });
+  
+  /* ajax form submission */
+  $('ss_form').addEvent('submit',function(e) {
+    if(e) e.stop();
+    fnSubmit(true);
+  });
+  
+  
+});
+JS
+);

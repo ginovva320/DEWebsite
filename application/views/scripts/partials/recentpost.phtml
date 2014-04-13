@@ -1,0 +1,33 @@
+<?php
+$post = $this->post;
+$delta = time() - $post['time'];
+$time['m'] = intval($delta / 2592000);
+$delta -= $time['m'] * 2592000;
+$time['d'] = intval($delta / 86400);
+$delta -= $time['d'] * 86400;
+$time['h'] = intval($delta / 3600);
+$delta -= $time['h'] * 3600;
+$time['i'] = intval($delta / 60);
+$delta -= $time['i'] * 60;
+$time['s'] = $delta;
+if ($time['s'] < 1) $time = null;
+else {
+	if ($time['m']) $time = $time['m'] . ($time['m'] != 1 ? ' months' : ' month');
+	else if ($time['d']) $time = $time['d'] . ($time['d'] != 1 ? ' days' : ' day');
+	else if ($time['h']) $time = $time['h'] . ($time['h'] != 1 ? ' hours' : ' hour');
+	else if ($time['i']) $time = $time['i'] . ($time['i'] != 1 ? ' minutes' : ' minute');
+	else $time = $time['s'] . ' seconds';
+	
+	$time = ", $time ago";
+}
+$url = $this->url( array('controller' => 'topic', 'action' => 'view', 'id' => $post['id'], 'post' => $post['post_id']), null, true);
+$bUrl = $this->url( array('controller' => 'board', 'action' => 'view', 'id' => $post['board_id']), null, true);
+echo <<<EOHTML
+<section>
+<p><a href=$bUrl>$post[board]</a> &raquo; <a href=$url>{$post['title']}</a></p>
+<footer>
+<span class={$post['class']}>{$post['name']}</span>$time
+</footer>
+</section>
+EOHTML;
+?>

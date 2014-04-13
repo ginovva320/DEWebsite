@@ -1,0 +1,113 @@
+<?php
+$nameSort = $this->url(array('controller' => 'armory', 'action' => 'roster', 'sort' => 'name', 'page' => '1', 'dir' => ($this->sort != 'name' || $this->dir == 'desc' ? 'asc' : 'desc')),null,FALSE);
+$classSort = $this->url(array('controller' => 'armory', 'action' => 'roster', 'sort' => 'class', 'page' => '1', 'dir' => ($this->sort != 'class' || $this->dir == 'desc' ? 'asc' : 'desc')),null,FALSE);
+$raceSort = $this->url(array('controller' => 'armory', 'action' => 'roster', 'sort' => 'race', 'page' => '1', 'dir' => ($this->sort != 'race' || $this->dir == 'desc' ? 'asc' : 'desc')),null,FALSE);
+$genderSort = $this->url(array('controller' => 'armory', 'action' => 'roster', 'sort' => 'gender', 'page' => '1', 'dir' => ($this->sort != 'gender' || $this->dir == 'desc' ? 'asc' : 'desc')),null,FALSE);
+$levelSort = $this->url(array('controller' => 'armory', 'action' => 'roster', 'sort' => 'level', 'page' => '1', 'dir' => ($this->sort != 'level' || $this->dir == 'desc' ? 'asc' : 'desc')),null,FALSE);
+$rankSort = $this->url(array('controller' => 'armory', 'action' => 'roster', 'sort' => 'rank', 'page' => '1', 'dir' => ($this->sort != 'rank' || $this->dir == 'desc' ? 'asc' : 'desc')),null,FALSE);
+$gUrl = $this->url(array('controller' => 'armory', 'action' => 'guild', 'name' => $this->guild, 'realm' => $this->realm),null,true);
+echo <<<EOHTML
+<section class=postframe class=lift>
+	<header>
+		<h1>Guild Roster &mdash; <a href='$gUrl'>{$this->guild}</a>, {$this->realm}</h1>
+	</header>
+	<article>
+		<div id=pagediv>
+			Page
+			<select name=page id=page-select>
+EOHTML;
+for ($i = 1; $i <= $this->pages; $i++)
+{
+	if ($i == $this->page)
+	{
+		$selected = 'selected';
+		$value = 'nothing';
+	}
+	else
+	{
+		$selected = '';
+		$value = $this->url(array('controller' => 'armory', 'action' => 'roster', 'page' => $i),null,FALSE);
+	}
+	echo "<option value=$value $selected>$i</option>";
+}
+echo <<<EOHTML
+			</select>
+		</div>
+		<table id=guild-roster >
+			<thead>
+				<th><a href=$nameSort>Name</a></th>
+				<th><a href=$classSort>Class</a></th>
+				<th><a href=$raceSort>Race</a></th>
+				<th><a href=$genderSort>Gender</a></th>
+				<th><a href=$levelSort>Level</a></th>
+				<th><a href=$rankSort>Rank</a></th>
+			</thead>
+			<tbody>
+EOHTML;
+if ($this->members == null)
+{
+	echo '<tr><td style=text-align:center; colspan=6>Guild Not Found</td></tr>';
+}
+else
+{
+	foreach ($this->members as $member)
+	{
+		echo <<<EOHTML
+				<tr>
+					<td>$member[name]</td>
+					<td>$member[class]</td>
+					<td>$member[race]</td>
+					<td>$member[gender]</td>
+					<td>$member[level]</td>
+					<td>$member[rank]</td>
+				</tr>
+EOHTML;
+	}
+}
+echo <<<EOHTML
+			</tbody>
+		</table>
+	</article>
+</section>
+EOHTML;
+
+?>
+<script>
+var selectmenu = document.getElementById('page-select');
+selectmenu.onchange=function(){
+	var chosenoption = this.options[this.selectedIndex];
+	if (chosenoption.value != "nothing"){
+		window.location = chosenoption.value;
+	}
+}
+</script>
+<style>
+table#guild-roster {
+	width: 100%;
+	border-collapse: collapse;
+	border: 3px outset #ddd;
+}
+table#guild-roster tr > * {
+	text-align: center;
+	border-top: 1px solid #555;
+}
+table#guild-roster tr > *:first-child {
+	text-align: left;
+}
+table#guild-roster tr:nth-child(even) td {
+	background: #222;
+}
+#guild-roster td {
+	font-size: 13px;
+}
+#pagediv select {
+	margin-left: 3px;
+}
+#pagediv {
+	float: right;
+	font-weight: 700;
+	font-size: 14px;
+    margin: 5px;
+    padding: 5px;
+}
+</style>

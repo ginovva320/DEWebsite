@@ -1,0 +1,169 @@
+<div id="view-content">
+<p><b>RaidView&trade;</b></p>
+</div>
+<?php
+$mumble = false;
+$this->minifyHeadScript()->appendFile($this->baseUrl() . '/js/raidview.js');
+$video = mysqli_fetch_array($this->videos);
+$url = "/vid/{$this->id}/{$video['id']}.webm";
+
+if (!$this->mumble || !$video['mumble'])
+{
+	$class = "class='rv-mute'";
+} else {
+	$mumble = true;
+	$class = '';
+}
+
+echo <<<EOHTML
+<section id=main_section>
+	<video preload $class>
+		<source	src='$url' type='video/webm; codecs="vp8, vorbis"' />
+			<p>
+				Please upgrade to Mozilla Firefox 4, Opera 10, or Chrome 6. Stuck to
+			   	IE? Update to IE9 and install <a href=https://tools.google.com/dlpage/webmmf>WebM</a>
+			</p>
+	</video>
+</section>
+
+<section id=vid_controls>
+<input type=button class=vid_button id=vid_play />
+<input type=button class=vid_button id=vid_mute />
+<div id=slider_cont>
+	<div id=slider_prog><span id=slider></span></div>
+</div>
+<div id=vid_time></div>
+</section>
+
+<section id=sec_section>
+EOHTML;
+while ($video = mysqli_fetch_array($this->videos))
+{
+	if (!$this->mumble || !$video['mumble'] || $mumble)
+	{
+		$class = "class='rv-mute'";
+	} else {
+		$mumble = true;
+		$class = '';
+	}
+	$url = "/vid/{$this->id}/$video[id].webm";
+	echo <<<EOHTML
+	<video preload $class>
+		<source	src='$url' type='video/webm; codecs="vp8, vorbis"' />
+	</video>
+EOHTML;
+}
+echo "</section>";
+?>
+<style>
+#main_section {
+	text-align: center;
+}
+
+#sec_section {
+	text-align: center;
+}
+
+video {
+	border: 2px inset #888;
+	min-height: 188px;
+	margin: 0 20px;
+	width: 300px;
+	cursor: pointer;
+}
+
+.vid_button {
+	width: 45px;
+	height: 35px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+#vid_time {
+	width: 85px;
+	height: 26px;
+	font: 13px/ 26px DroidSansBold;
+	margin: 6px 3px !important;
+	border: 1px inset #666;
+	border-radius: 5px;
+	background: #222;
+	text-align: center;
+}
+
+#vid_mute {
+	background: url('/img/vid_mute.png') no-repeat #222;
+}
+
+#vid_mute.vid_muted {
+	background-position: -39px 1px;
+}
+
+#vid_play {
+	background: url('/img/vid_control.png') no-repeat #222;
+}
+
+#vid_play:hover {
+	background-position: -40px 0;
+}
+
+#vid_play.vid_pause {
+	background-position: 0px -30px;
+}
+
+#vid_play.vid_pause:hover {
+	background-position: -40px -30px;
+}
+
+#vid_play.vid_load {
+	background: url('/img/vid_load.gif') no-repeat 12px 7px
+		#222;
+}
+
+#vid_controls {
+	height: 40px;
+	width: 870px;
+	margin: 10px auto;
+	border: 1px inset #666;
+	border-radius: 5px;
+}
+
+#vid_controls>* {
+	margin: 3px;
+	float: left;
+}
+
+#main_section video {
+	width: 854px;
+	height: 480px;
+}
+
+#slider_cont {
+	width: 664px;
+	height: 20px;
+	border: 2px inset #888;
+	border-radius: 28px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	background: black;
+}
+
+#slider {
+	width: 20px;
+	height: 20px;
+	border-radius: 28px;
+	background: #0398FF;
+	display: inline-block;
+	position: relative;
+	left: 0;
+	margin: 0;
+	box-shadow: 0 0 5px white;
+}
+
+#slider_prog {
+	height: 20px;
+	border-radius: 28px;
+	position: relative;
+	width: 0;
+	background: #222;
+}
+</style>

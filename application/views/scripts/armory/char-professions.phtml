@@ -1,0 +1,119 @@
+<?php 
+echo <<<EOHTML
+	<table class='char-prof'>
+		<tbody>
+			<tr>
+				<th colspan=4>Primary</th>
+			</tr>
+EOHTML;
+$idx = 0;
+if (count($this->professions)==0)
+{
+	echo "<tr class='prof-row'><th colspan='4'><em>None</em></th></tr>";
+}
+foreach ($this->professions as $prof)
+{
+	$count = count($prof['recipes']);
+	$prime = $count != 0 ? 'prim-prof-name' : '';
+	echo <<<EOHTML
+	<tr class=prof-row>
+		<td class='prof-icon'><img class='wow-icon' src='http://us.media.blizzard.com/wow/icons/56/$prof[icon].jpg'/></td>
+		<th class='prof-name $prime' rel='$idx'>$prof[name]</td>
+		<td>$prof[rank]/$prof[max]</td>
+		<td>$count Recipes</td>
+	</tr>
+EOHTML;
+	if ($count != 0)
+	{
+		$primTables[$idx] = "<table class='prim-prof'><tbody><th>$prof[name] Recipes</th>";
+		foreach(array_reverse($prof['recipes']) as $recipe)
+		{
+			$primTables[$idx] .= "<tr><td><a href='$recipe[spell_link]'>$recipe[spell_name]</a></td></tr>";
+		}
+		$primTables[$idx++] .= "</tbody></table>";
+	}
+}
+echo '</tbody></table>';
+echo "<div id='recipe-list'>";
+	foreach ($primTables as $primTable)
+		echo $primTable;
+echo "</div>";
+echo '<table class=\'char-prof\'><tbody><tr><th colspan=4>Secondary</th></tr>';
+foreach ($this->profs['secondary'] as $prof)
+{
+	$count = count($prof['recipes']);
+	echo <<<EOHTML
+	<tr class=prof-row>
+		<td class='prof-icon'><img class='wow-icon' src='http://us.media.blizzard.com/wow/icons/56/$prof[icon].jpg'/></td>
+		<th class='prof-name'>$prof[name]</td>
+		<td>$prof[rank]/$prof[max]</td>
+		<td>$count Recipes</td>
+	</tr>
+EOHTML;
+}
+echo '</tbody></table>';
+?>
+<script>
+$$('.prim-prof-name').addEvent('click',function()
+{
+	$('recipe-list').reveal();
+	var idx = this.get('rel');
+	$$('.prim-prof').hide();
+	$$('.prim-prof')[idx].show();
+});
+</script>
+<style>
+.char-prof tr > th:first-child {
+    border: none;
+}
+.char-prof tr.prof-row {
+    background-color: #222;
+    background-image: -moz-linear-gradient(transparent, rgba(0, 0, 0, 0.68));
+    box-shadow: 0px 0px 5px #aaa;
+}
+.char-prof td, .char-prof th {
+    border-top: 1px inset #0398FF;
+    border-bottom: 1px inset #0398FF;
+}
+.char-prof td:last-child {
+    border: 1px inset #0398FF;
+    border-radius: 0 5px 5px 0;
+    border-left: none;
+}
+.char-prof td:first-child {
+    border: 1px inset #0398FF;
+    border-radius: 5px 0 0 5px;
+    border-right: none;
+}
+.char-prof {
+    border-spacing: 0 10px;
+    width: 100%;
+    text-align: center;
+}
+.prof-name {
+	font-size: 18px;
+	font-weight: bold;
+}
+.prim-prof-name {
+	cursor: pointer;
+	color: #0398FF;
+}
+.prof-icon {
+	width: 58px;
+}
+.prim-prof tr:nth-child(even) {
+    background: #222;
+}
+.prim-prof {
+    border-collapse: collapse;
+    width: 100%;
+}
+#recipe-list {
+    display: none;
+    height: 200px;
+    width: 400px;
+    border: 1px outset #555555;
+    overflow: auto;
+    margin: 10px auto;
+}
+</style>

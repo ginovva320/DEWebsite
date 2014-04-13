@@ -1,0 +1,23 @@
+<?php
+echo '<ul id=char-titles>';
+if (count($this->titles) == 0)
+{
+	echo "<li><em>None</em></li>";
+}
+foreach ($this->titles as $title)
+{
+	$url = 'http://www.wowhead.com/title='.$title['id'];
+	echo "<li><a href='$url'>$title[name_with_name]</a></li>";
+}
+echo '</ul>';
+?>
+<style>
+#char-titles {
+	margin: 20px;
+	text-align: center;
+}
+#char-titles li a {
+	color: #FFD100;
+	font-size: 13px;
+}
+</style>

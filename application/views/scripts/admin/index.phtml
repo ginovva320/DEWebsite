@@ -1,0 +1,24 @@
+<?php 
+$addslide = $this->url(array('controller' => 'admin', 'action' => 'add-slide'), null, true);
+$slides = $this->url(array('controller' => 'admin', 'action' => 'slides'), null, true);
+$forum = null;
+//$forum = $this->url(array('controller' => 'account', 'action' => 'change-email'), null, true);
+echo <<<EOHTML
+<section class='lift postframe'>
+	<header>
+		<h1>Dishonor Elite Admin</h1>
+	</header>
+	<article>
+		<ul>
+			<li>Slideshow Management
+				<ul>
+					<li><a href=$addslide>Add Slide</a></li>
+					<li><a href=$slides>Manage Slides</a></li>
+				</ul>
+			</li>
+			<li>Forums Management</li>
+		</ul>
+	</article>
+</section>
+EOHTML;
+?>

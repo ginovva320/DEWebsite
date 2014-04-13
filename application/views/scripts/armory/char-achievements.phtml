@@ -1,0 +1,77 @@
+<?php 
+$wh = new WowHead();
+echo "<div id='ach-points'>{$this->points} <img src='/img/achievements.gif'/></div><div id='achieves-box'><table id='char-achieves'><tbody>";
+for ($i = 0; $i < 20; $i++)
+{
+	$achievement = $this->achievements[$i];
+	$name = $achievement['name'];
+	$url = $achievement['url'];
+	$icon = $wh->getData("http://www.wowhead.com/achievement=$achievement[id]",'icon');
+	$time = array();
+	$delta = time() - ($achievement['timestamp']/1000);
+	$time['m'] = intval($delta / 2592000);
+	$delta -= $time['m'] * 2592000;
+	$time['d'] = intval($delta / 86400);
+	$delta -= $time['d'] * 86400;
+	$time['h'] = intval($delta / 3600);
+	$delta -= $time['h'] * 3600;
+	$time['i'] = intval($delta / 60);
+	$delta -= $time['i'] * 60;
+	$time['s'] = $delta;
+	if ($time['s'] < 1) $time = null;
+	else {
+		if ($time['m']) $time = $time['m'] . ($time['m'] != 1 ? ' months' : ' month');
+		else if ($time['d']) $time = $time['d'] . ($time['d'] != 1 ? ' days' : ' day');
+		else if ($time['h']) $time = $time['h'] . ($time['h'] != 1 ? ' hours' : ' hour');
+		else if ($time['i']) $time = $time['i'] . ($time['i'] != 1 ? ' minutes' : ' minute');
+		else $time = $time['s'] . ' seconds';
+		
+		$time = "$time ago";
+	}
+	echo <<<EOHTML
+	<tr>
+		<td>
+			<a href='$url'>
+				<img class='wow-icon' src='http://wow.zamimg.com/images/wow/icons/small/$icon.jpg'/>
+			</a>
+		</td>
+		<td class='q'>
+			<a href='$url'>$name</a>
+		</td>	
+		<td>
+			$time
+		</td>
+	</tr>
+EOHTML;
+}
+echo "</tbody></table></div>";
+?>
+<style>
+#ach-points {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 10px auto;
+    text-align: center;
+    width: 300px;
+}
+#achieves-box {
+	margin: 30px;
+	border: 2px outset #0398FF;
+	box-shadow: 0 0 10px #FFFFFF;
+	max-height: 800px;
+	overflow: auto;
+}
+#char-achieves {
+	border-collapse: collapse;
+	width: 100%;
+}
+#char-achieves tr {
+	border: 1px inset #111;
+}
+#char-achieves tr:nth-child(even) {
+	background: #222;
+}
+#char-achieves tr td:last-child {
+	font-size: 11px;
+}
+</style>

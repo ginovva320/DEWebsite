@@ -1,0 +1,19 @@
+<?php 
+$changePw = $this->url(array('controller' => 'account', 'action' => 'change-pw'), null, true);
+$changeEmail = $this->url(array('controller' => 'account', 'action' => 'change-email'), null, true);
+$char = $this->url(array('controller' => 'character'), null, true);
+echo <<<EOHTML
+<section id=accountlinks class='lift postframe'>
+	<header>
+		<h1>Account Management</h1>
+	</header>
+	<article>
+		<ul>
+			<li><a href=$changeEmail>Change My Email Address</a></li>
+			<li><a href=$changePw>Change My Password</a></li>
+			<li><a href=$char>Manage My Characters</a></li>
+		</ul>
+	</article>
+</section>
+EOHTML;
+?>

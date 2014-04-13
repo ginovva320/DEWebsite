@@ -1,0 +1,75 @@
+<?php 
+echo "<table id='char-reps'><tbody>";
+foreach ($this->reps as $rep)
+{
+	$name = $rep['name'];
+	$url = "http://www.wowhead.com/faction=$rep[id]";
+	$perc = $rep['value'] / $rep['max'] * 100;
+	$standing = $rep['standingName'];
+	$class = "rep-$rep[standing]";
+	echo <<<EOHTML
+	<tr>
+		<th>
+			<a href='$url'>$name</a>
+		</th>
+		<td>
+			<div class='rep-val'>$rep[value] / $rep[max]</div>
+			<div class='rep-box'>
+				<div class='rep-perc $class' style="width:$perc%;">
+				</div>
+			</div>
+		</td>
+		<th>
+			$standing
+		</th>
+	</tr>
+EOHTML;
+}
+echo "</tbody></table></div>";
+?>
+<style>
+.rep-val {
+    position: relative;
+    text-align: center;
+    top: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 black;
+}
+#char-reps {
+	width: 100%;
+}
+#char-reps tbody tr:not(:first-child) th:first-child {
+	border-top: 1px inset #aaa;
+}  
+#char-reps tbody tr th:first-child {
+	width: 30%;
+}
+#char-reps tbody tr td:nth-child(2) {
+	width: 55%;
+}
+.rep-box {
+	width: 100%;
+	height: 14px;
+	border: 2px inset #aaa;
+	text-align: center;
+	border-radius: 5px;
+}
+.rep-perc {
+	height: 100%;
+	background-image: url('/img/reps.png');
+	border-radius: 3px;
+	border-right: 1px inset #aaa;
+}
+.rep-0, .rep-1, .rep-2 {
+	background-position: 0 0;
+}
+.rep-3 {
+	background-position: 0 -22px;
+}
+.rep-4, .rep-5, .rep-6 {
+	background-position: 0 -44px;
+}
+.rep-7 {
+	background-position: 0 -66px;
+}
+</style>

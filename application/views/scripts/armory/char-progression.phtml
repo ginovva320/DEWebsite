@@ -1,0 +1,59 @@
+<?php 
+echo <<<EOHTML
+<table id=char-progression>
+	<thead>
+		<tr>
+			<th>Boss</th>
+			<th>Normal Kills</th>
+			<th>Heroic Kills</th>
+		</tr>
+	</thead>
+	<tbody>
+EOHTML;
+foreach ($this->raidStats as $raid)
+{
+	echo "<tr><th colspan=3><a href='http://www.wowhead.com/zone=$raid[id]'>$raid[name]</a></th></tr>";
+	foreach ($raid['bosses'] as $boss)
+	{
+		echo <<<EOHTML
+			<tr>
+				<td>
+					<a href='http://www.wowhead.com/npc=$boss[id]'>$boss[name]</a>
+				</td>
+				<td>$boss[normalKills]</td>
+				<td>$boss[heroicKills]</td>
+			</tr>
+EOHTML;
+	}
+}
+echo <<<EOHTML
+			</tbody>
+		</table>
+	</div>
+EOHTML;
+?>
+<style>
+#char-progression {
+	border-collapse: collapse;
+	width: 100%;
+}
+#char-progression thead th:first-child {
+	text-align: left;
+}
+#char-progression tbody tr td:not(:first-child) {
+	text-align: center;
+}
+#char-progression th {
+	background: #001;
+    border-bottom: 1px inset #AAAAAA;
+    border-top: 1px inset #AAAAAA;
+}
+
+#char-progression tr:nth-child(even) td {
+	background: #222;
+}
+
+#char-progression tr:nth-child(odd) td {
+	background: #111;
+}
+</style>

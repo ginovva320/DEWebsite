@@ -1,0 +1,173 @@
+<style>
+#char-tabs {
+	margin-top: 20px;
+	text-align: center;
+}
+#char-tabs li {
+	-moz-border-bottom-colors: none;
+	-moz-border-image: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background: none repeat scroll 0 0 #222222;
+	border-color: #BBBBBB #BBBBBB -moz-use-text-color;
+	border-style: solid solid none;
+	border-width: 2px 2px medium;
+	color: #0398FF;
+	cursor: pointer;
+	display: inline;
+	font: bold 12px 'Droid Sans';
+	margin-right: 7px;
+	padding: 5px;
+}
+#char-tabs li.tabSelected {
+	box-shadow: 0 0 6px #0398FF inset;
+	color: white;
+	font-size: 14px;
+	text-shadow: 1px 1px 0 #0398FF;
+}
+
+.charbox {
+	margin-top: 5px !important;
+}
+
+#armory-char {
+	margin-top: 0;
+}
+
+.charbox header {
+	height: 30px;
+	overflow: auto;
+	border-bottom: 2px inset #0398FF;
+}
+
+.charbox header div {
+	font-weight: 700;
+	font-size: 16px;
+}
+
+#char-name {
+	float: left;
+}
+
+#char-guild {
+	float: right;
+}
+
+#char-info {
+	height: 50px;
+	overflow: auto;
+}
+
+#char-spec {
+	float: left;
+}
+
+#char-spec img {
+	border: 2px outset #555555;
+	width: 25px;
+}
+
+#char-spec label {
+	bottom: 8px;
+	font-weight: 700;
+	left: 8px;
+	position: relative;
+}
+
+#char-ilvl {
+	float: right;
+	text-align: right;
+	font-weight: 700;
+}
+
+#char-ilvl label {
+	font-size: 18px;
+}
+
+img.icon-border {
+	position: absolute;
+}
+
+img.gear-icon {
+	margin-right: 5px;
+}
+
+#char-gear table {
+	border-collapse: collapse;
+	width: 100%;
+/*	background-color: #001122;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#001122), to(#000011)); 
+	background-image: -webkit-linear-gradient(top, #001122, #000011); 
+	background-image:    -moz-linear-gradient(top, #001122, #000011); 
+	background-image:     -ms-linear-gradient(top, #001122, #000011); 
+	background-image:      -o-linear-gradient(top, #001122, #000011); 
+	background-image:         linear-gradient(top, #001122, #000011);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#001122', EndColorStr='#000011'); */
+	background-size: 100%;
+	border: 3px outset #aaa;	
+}
+#char-gear table td {
+	background-color: transparent;
+	background-color: rgba(0, 0, 0, 0.7);  
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#02000000,endColorstr=#02000000); 
+	zoom: 1;
+}
+#char-gear table td.gear-name {
+	min-width: 150px;
+	text-shadow: 1px 1px 1px #222;
+}
+#char-gear table .gear {
+	border-bottom: 1px inset #555;
+}
+#char-gear table td.gear-icon {
+    width: 41px;
+}
+#char-gear table .left.gear {
+	text-align: left;
+}
+
+#char-gear table .right.gear {
+	text-align: right;
+}
+
+#char-gear table .gear {
+	valign: center;
+	font-size: 12px;
+}
+#char-stats-tables {
+    border-top: 2px inset #0398FF;
+    margin-top: 20px;
+    padding-top: 20px;
+    width: 100%;
+}
+#char-stats-tables th:nth-child(2) {
+	border-right: 1px dotted #0398FF;
+	border-left: 1px dotted #0398FF;
+}
+#char-stats-tables > tbody > tr > th {
+	width: 33.3%;
+}
+#char-stats-tables table tr th {
+    text-align: right;
+}
+#char-stats-tables table td, #char-stats-tables table th {
+    font-size: 12px;
+}
+#char-stats-tables table {
+    width: 100%;
+}
+.ajax-load {
+    margin: 0 372px;
+    width: 25px;
+    opacity: 0;
+    display: block;
+}
+#char-face {
+	text-align: center;
+}
+#char-face img {
+	border: 2px inset white;
+	box-shadow: 0 0 20px #0398FF;
+}
+</style>

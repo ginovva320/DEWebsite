@@ -1,0 +1,151 @@
+<?php
+if ($this->rank >= 20) {
+	echo <<<EOHTML
+<section id=applist class=lift>
+<table id=apptable>
+	<thead>
+		<tr>
+			<th colspan=5>Guild Applications</th>
+		</tr>
+		<tr>
+			<th></th>
+			<th>Name</th>
+			<th>App Status</th>
+			<th>Comments</th>
+			<th>Time</th>
+		</tr>
+	</thead>
+	<tbody>
+EOHTML;
+	while ($application = mysqli_fetch_array($this->applications)) {
+		$url = $this->url(array('controller' => 'application', 'action' => 'view', 'id' => $application['id']), null, true);
+		$time = date('g:ia, M j Y', $application['time']);
+		if ($application['status'] == 'Open') {
+			$class = 'open';
+		} else if ($application['status'] == 'Accepted') {
+			$class = 'acc';
+		} else if ($application['status'] == 'Rejected') {
+			$class = 'rej';
+		}
+		echo <<<EOHTML
+		<tr>
+			<td><a href=$url>View</a></td>
+			<td class={$application['class']}>{$application['name']}</td>
+			<td class='$class'>{$application['status']}</td>
+			<td>$application[comments]</td>
+			<td>$time</td>
+		</tr>
+EOHTML;
+	}
+	echo <<<EOHTML
+	</tbody>
+</table>
+</section>
+EOHTML;
+}
+?>
+<section class="lift postframe">
+<header>
+<h1>About Dishonor Elite</h1>
+</header>
+<article>
+	<p>Few things to consider when applying with our guild.</p>
+	<ul class=bullets>
+		<li>
+			Do not leave questions unanswered it shows us that you are ok with
+			being half-assed.
+		</li>
+		<li>
+			Remember we don&rsquo;t know who you are nor do we know what your
+			sense of humor is like, we do encourage you to be who you are on the
+			application but 1 off jokes will not be understood during the
+			application process.
+		</li>
+		<li>
+			Put your best foot forward, make sure all of your gear (Regardless
+			of item level) is enchanted and gemmed properly for your spec and
+			class.
+		</li>
+		<li>
+			If you have a &ldquo;unique&rdquo; spec please go in to detail on
+			why you have chosen those talents don&rsquo;t leave it to us to assume
+			you have no clue what you are doing.
+		</li>
+		<li>
+			Yes a screen shot of your UI (In raid) is required.
+		</li>
+		<li>
+			Do not pester us on your application all of us do in fact have real
+			lives and other things to do all day rather than read your application.
+			There are MANY people that are viewing your application and chances are
+			if you have not heard weather or not you are accepted or denied it is
+			at the top of the discussion chart. Also keep in mind that you are not
+			the only applicant that we are reviewing some applications take longer
+			than others to review.
+		</li>
+		<li>
+			When we ask for your raid experience we are asking for your
+			&ldquo;Raid Experience&rdquo; not your &ldquo;I cleared Sunwell last
+			week at Level 80 with Tier 10 gear&rdquo;.
+		</li>
+		<li>
+			Understand that we do not care about your &ldquo;Gear Score&rdquo;
+			we care about your Idiot score.
+		</li>
+		<li>
+			If you find doing things that go against the normal tactics of your
+			class at the Raid Leaders requests an overwhelming challenge then
+			perhaps this is NOT the best place for you.
+		</li>
+		<li>
+			Make sure you check your inbox on our web page for application
+			status change we will not hunt you down it is up to you to contact us
+			about the change of your application.
+		</li>
+	</ul>
+	<p>
+		Above all else HAVE FUN nothing says you want to be here more than
+		showing that you know how to have fun. After all it is a game&hellip;..
+		<br/>
+		<br/>
+		We look forward to your application!
+	</p>
+	<div id=apply_button class=de_button>
+		<?php 
+			if ($this->application)
+				echo 'VIEW APP';
+			else
+				echo 'APPLY'; 
+		?>
+	</div>
+		<?php
+		if ($this->application) {
+				$jsAction = <<<JS
+window.location = baseUrl+'/application/view/id/{$this->application['id']}'
+JS;
+		} else if ($this->rank == 0 && !$this->application) {
+			$jsAction = <<<JS
+window.location = baseUrl+'/application/add'
+JS;
+		} else if ($this->rank < 0) {
+			$jsAction = <<<JS
+DEmessenger('Login to Apply','Please login above or create an account to apply to Dishonor Elite')
+JS;
+		} else {
+			$jsAction = <<<JS
+window.location = baseUrl+'/application/add'
+JS;
+		}
+
+	$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready',function() {
+	$('apply_button').addEvent('click',function(e) {
+		e.stop();
+		$jsAction
+	});
+});
+JS
+	);
+	?>
+</article>
+</section>

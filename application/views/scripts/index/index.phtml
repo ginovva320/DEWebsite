@@ -1,0 +1,77 @@
+<?php
+$i = 0;
+?>
+<table id="WoL" class="recents lift">
+	<thead>
+		<tr>
+			<th colspan=6>Raid Parses</th>
+		</tr>
+	</thead>
+	<tbody>
+<?= $this->recentRaids() ?>
+	</tbody>
+</table>
+<table id="mmo" class="recents lift">
+	<thead>
+		<tr>
+			<th colspan=2>MMO-Champion - News</th>
+		</tr>
+	</thead>
+	<tbody>
+<?= $this->mmochamp() ?>
+	</tbody>
+</table>
+<section id="welcome" class="lift postframe">
+	<header>
+		<h1>Welcome to Dishonor Elite</h1>
+	</header>
+	<article>
+		<div>
+			<a href='http://www.wowprogress.com/guild/us/proudmoore/Dishonor+Elite'><img src='http://www.wowprogress.com/guild_img/476495/out/type.site' style='width:115px;'/></a>
+		</div>
+		<p>
+			Welcome to the Dishonor Elite web site please have a look around!
+		</p>
+		<p>
+			Please note that our web page is best viewed
+			in Google Chrome/Internet Explorer 9 as the website is built using the latest
+			HTML5 features.
+		</p>
+		<p>
+			Dishonor Elite is a raiding guild that focuses on the social aspect of this game
+			and taking progression raiding serious while at the same time not removing the fun
+			factor, because let’s face it if you’re not having fun why bother right!
+		</p>
+		<p>
+			We appreciate your time, certainly you can appreciate ours.
+		</p>
+		<p>
+			Our current raid times are Tuesday / Wednesday / Thursday raid invites go out at
+			6:30 PM (PST) and go untill 11:00 PM (PST).
+		</p>
+		<p>
+			Stind and The Dishonor Elite Guild
+		</p>
+	</article>
+</section>
+<?php 
+$this->minifyHeadScript()->appendScript(<<<JS
+	window.addEvent('domready', function() {
+		var mmoH = Number.from($('mmo').getStyle('height'));
+		var postH = Number.from($('WoL').getStyle('height'));
+
+		var max = mmoH > postH ? mmoH : postH;
+
+		$('mmo').setStyle('height', max);
+		$('WoL').setStyle('height', max);
+		
+		var mmoHead = Number.from($$('#mmo thead tr')[0].getStyle('height'));
+		var postHead = Number.from($$('#WoL thead tr')[0].getStyle('height'));
+		
+		var min = mmoHead < postHead ? mmoHead : postHead;
+		
+		$$('#mmo thead tr')[0].setStyle('height', min);
+		$$('#WoL thead tr')[0].setStyle('height', min);
+	});
+JS
+);

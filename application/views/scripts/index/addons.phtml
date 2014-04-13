@@ -1,0 +1,36 @@
+<?php
+echo <<<EOHTML
+<section class='lift postframe'>
+	<header>
+		<h1>Addons</h1>
+	</header>
+	<article>
+		<table id=addons_table>
+			<thead>
+				<tr>
+					<th></th>
+					<th>Name</th>
+					<th>Required</th>
+				</tr>
+			</thead>
+			<tbody>
+EOHTML;
+		$flame = $this->baseUrl() . '/img/curse-flame-18.png';
+		$check = '<img src="'. $this->baseUrl() . '/img/check_round.png"/>';
+			while($addon = mysqli_fetch_array($this->addons)) {
+				$img = $addon['required'] ? $check : '';				
+				echo <<<EOHTML
+				<tr>
+					<td><a href="$addon[curse]"><img src="$flame"/></a></td>
+					<td><a href="$addon[link]">$addon[name]</a></td>
+					<td>$img</td>
+				</tr>
+EOHTML;
+			}
+echo <<<EOHTML
+			</tbody>				
+		</table>
+	</article>
+</section>
+EOHTML;
+?>

@@ -1,0 +1,541 @@
+<?php
+$this->minifyHeadScript()->appendFile($this->baseUrl().'/js/tabs.js');
+$internet = $this->app['internet'] ? 'Yes' : 'No';
+$mic = $this->app['mic'] ? 'Yes' : 'No';
+$armory = 	$this->url(array('controller' => 'armory',
+							 'action' => 'view',
+							 'realm' => $this->app['server'],
+							 'name' => $this->app['name']),null,true);
+$robot = 	'http://www.askmrrobot.com/wow/gear/usa/'. 
+			urlencode(strtolower($this->app['server'])) .
+			'/' .
+			urlencode(strtolower($this->app['name']));
+$epeen = 	'http://raidbots.com/epeenbot/us/' .
+			urlencode(strtolower($this->app['server'])) .
+			'/' .
+			urlencode(strtolower($this->app['name']));
+//$this->hideSide = true;
+echo <<<EOHTML
+<header id=apphead>
+	<h1><span class={$this->app['class']}>{$this->app['name']}</span>'s Guild Application</h1>
+EOHTML;
+if ($this->rank > 29 && $this->app['status'] == 'Open') {
+	$a_url = $this->url(array('controller' => 'application', 'action' => 'change', 'id' => $this->app['id']), null, true) . "/aid/{$this->app['a_id']}/status/Accepted";
+	$r_url = $this->url(array('controller' => 'application', 'action' => 'change', 'id' => $this->app['id']), null, true) . "/aid/{$this->app['a_id']}/status/Rejected";
+	echo <<<EOHTML
+	<a href='$r_url'><div id=app_reject>REJECT</div></a>
+	<a href='$a_url'><div id=app_accept>ACCEPT</div></a>
+EOHTML;
+} else if ($this->app['status'] == 'Accepted') {
+	echo '<div id=app_accept>ACCEPTED</div>';	
+} else if ($this->app['status'] == 'Rejected') {
+	echo '<div id=app_reject>REJECTED</div>';
+}
+$xpTable = "None"; 
+if (mysqli_num_rows($this->exp) > 0) {
+	$xpTable = "<table>";
+	while ($exp = mysqli_fetch_array($this->exp)) {
+		$xpTable .= "<tr><th>$exp[name] - ";
+		$xpTable .= strstr($exp['mode'],'NORMAL') == FALSE ? 'Heroic' : 'Normal';
+		$xp = ucwords($exp['status']);
+		$xpTable .= "</th><td>$xp</td></tr>"; 
+	}
+	$xpTable .= "</table>";
+}
+$interface = preg_replace("/(http:\/\/)?([a-zA-Z0-9\-.]+\.[a-zA-Z0-9\-]+([\/]([a-zA-Z0-9_\/\-.?&%=+])*)*)/", '<a href="http://$2">$2</a>', $this->app['interface']);
+$wol = preg_replace("/(http:\/\/)?([a-zA-Z0-9\-.]+\.[a-zA-Z0-9\-]+([\/]([a-zA-Z0-9_\/\-.?&%=+])*)*)/", '<a href="http://$2">$2</a>', $this->app['wol']);
+echo <<<EOHTML
+</header>
+<table id=guildappanswers>
+	<tbody>
+		<tr>
+			<th>About Me</th>
+			<td>{$this->app['about']}</td>
+		</tr>
+		<tr>
+			<th>General Info</th>
+			<td>{$this->app['info']}</td>
+		</tr>
+		<tr>
+			<th>Why Dishonor Elite?</th>
+			<td>{$this->app['whyjoin']}</td>
+		</tr>
+		<tr>
+			<th>Gear</th>
+			<td>{$this->app['gear']}</td>
+		</tr>
+		<tr>
+			<th>Heroic Strats</th>
+			<td>{$this->app['strats']}</td>
+		</tr>
+		<tr>
+			<th>Prior Guilds</th>
+			<td>{$this->app['guilds']}</td>
+		</tr>
+		<tr>
+			<th>Joke</th>
+			<td>{$this->app['joke']}</td>
+		</tr>
+		<tr>
+			<th>Stable Internet?</th>
+			<td>{$internet}</td>
+		</tr>
+		<tr>
+			<th>Microphone?</th>
+			<td>{$mic}</td>
+		</tr>
+		<tr>
+			<th>Interface</th>
+			<td>{$interface}</td>
+		</tr>
+		<tr>
+			<th>Logs</th>
+			<td>{$wol}</td>
+		</tr>
+		<tr>
+			<th>Misc Resources</th>
+			<td>
+				<p><a target=_blank href=$armory>Armory Profile</a></p>
+				<p><a target=_blank href=$robot>Mr.Robot Profile</a></p>
+				<p><a target=_blank href=$epeen>Epeen Bot (Logs)</a></p>
+			</td>
+		</tr>
+		<tr>
+			<th>Question</th>
+			<td>{$this->app['question']}</td>
+		</tr>
+		<tr>
+			<th>Raid Experience</th>
+			<td>
+				{$xpTable}
+			</td>
+		</tr>
+	</tbody>
+</table>
+<ul id=apptabs>
+EOHTML;
+if ($this->rank > 10) {
+	echo '<li>Private Guild Comments</li>';
+}
+echo <<<EOHTML
+	<li>Public Application Comments</li>
+</ul>
+EOHTML;
+//$class='rogue';$name='Zoe';$date='June 23, 2011 9:03PM';$post['text']='Donec sit amet metus quam, ac dictum libero. Quisque posuere ornare nisl, a lobortis mi gravida nec. Donec tincidunt nulla non metus imperdiet adipiscing. Proin felis ipsum, condimentum in pretium quis, commodo ut lacus. Etiam imperdiet ultricies tincidunt. Aliquam mattis, velit eu mattis aliquet, dolor mi consectetur nibh, ut dignissim ipsum velit eu lorem. Sed viverra ante sit amet purus gravida non auctor tellus imperdiet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.';
+if ($this->rank > 10) {
+	echo "<section class='lift tabbox posts' id=guildtab>";
+	$i=1;
+	if (mysqli_num_rows($this->private) == 0) {
+		echo '<div class=de_button>ADD COMMENT</div>';
+	}
+	while ($post = mysqli_fetch_array($this->private)) {
+		$date = date('g:ia, M j Y',$post['time']);
+		$text = stripslashes($post['text']);
+		echo <<<EOHTML
+	<section class=post>
+		<aside>
+			<img class='wow-icon' src=$post[c_thumb] />
+			<div class=$post[c_class]>$post[c_name]</div>
+		</aside>
+		<div style="overflow:auto;">
+			<header>
+				<div class=num>#$i</div>
+				<div class=time>$date</div>
+			</header>
+			<article>
+				{$text}
+			</article>
+			<footer>
+				<div class='de_button replypost'>REPLY</div>
+			</footer>
+		</div>
+	</section>
+EOHTML;
+	$i++;
+	}
+	echo '</section>';
+	echo $this->replytotopic($this->app['id'],'application','false','_guild');
+}
+echo "<section class='lift tabbox posts' id=publictab>";
+//$class='paladin';$name='Stind';$date='June 23, 2011 9:03PM';$post['text']='Donec sit amet metus quam, ac dictum libero. Quisque posuere ornare nisl, a lobortis mi gravida nec. Donec tincidunt nulla non metus imperdiet adipiscing. Proin felis ipsum, condimentum in pretium quis, commodo ut lacus. Etiam imperdiet ultricies tincidunt. Aliquam mattis, velit eu mattis aliquet, dolor mi consectetur nibh, ut dignissim ipsum velit eu lorem. Sed viverra ante sit amet purus gravida non auctor tellus imperdiet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.';
+$i=1;
+if (mysqli_num_rows($this->public) == 0) {
+	echo '<div class=de_button>ADD COMMENT</div>';
+}
+while ($post = mysqli_fetch_array($this->public)) {
+	$date = date('g:ia, M j Y',$post['time']);
+	$text = stripslashes($post['text']);
+	echo <<<EOHTML
+	<section class=post>
+		<aside>
+			<img class='wow-icon' src=$post[c_thumb] />
+			<div class=$post[c_class]>$post[c_name]</div>
+		</aside>
+		<div style="overflow:auto;">
+			<header>
+				<div class=num>#$i</div>
+				<div class=time>$date</div>
+			</header>
+			<article>
+				{$text}
+			</article>
+			<footer>
+				<div class='de_button replypost'>REPLY</div>
+			</footer>
+		</div>
+	</section>
+EOHTML;
+	$i++;
+}
+echo '</section>';
+echo $this->replytotopic($this->app['id'],'application','true');
+if ($this->rank > 10) {
+	$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready',function(){
+	var tabs = new TabSwapper({
+		tabs: $$('#apptabs li'),
+		sections: $$('.tabbox'),
+		cookieName: 'appcookieDE',
+		smooth: true
+	});
+
+	$$('#apptabs li').addEvent('click', function(e) {
+		$('replysection').dissolve();
+		$('replysection_guild').dissolve();
+	});
+
+	var myFx = new Fx.Scroll(window);
+	
+	var fadeAndScroll = function(posts) {
+		posts.addEvents({
+			mouseenter : function() {
+				this.getElements('footer div').fade(1);
+			},
+			mouseleave : function() {
+				this.getElements('footer div').fade(0.3);
+			}
+		});
+		
+		posts.getElement('.replypost').addEvent('click', function(e){
+			e.stop();
+			$('replysection').reveal();
+			myFx.toElementCenter('replysection');
+		});
+	};
+
+	newc = false;
+	newc_guild = false;
+	
+	var previewUpdate = function()
+	{
+		html = $('previewpost').get('html');
+		editor = tinymce.get('myMessage').getContent();
+    	if (html.contains('iframe') && editor.contains('iframe'))
+    	{
+    		$('preview').set('checked',false);
+    		$('preview').set('disabled',true);
+    		$$('#preview !> div').setStyle('color','#A00');
+    	} 
+    	else 
+		{
+			$('preview').erase('disabled');
+			$$('#preview !> div').setStyle('color','inherit');
+		}
+		
+		if ($('preview').get('checked'))
+		{
+			$('previewpost').set('html',editor);
+		}
+	};
+	
+	$$('#preview !> div, #preview').addEvent('click',function()
+	{
+		$('preview').set('checked',!$('preview').get('checked'));
+		previewUpdate();
+	});
+	
+	var previewUpdate_guild = function()
+	{
+		html = $('previewpost_guild').get('html');
+		editor = tinymce.get('myMessage_guild').getContent();
+    	if (html.contains('iframe') && editor.contains('iframe'))
+    	{
+    		$('preview_guild').set('checked',false);
+    		$('preview_guild').set('disabled',true);
+    		$$('#preview_guild !> div').setStyle('color','#A00');
+    	} 
+    	else 
+		{
+			$('preview_guild').erase('disabled');
+			$$('#preview_guild !> div').setStyle('color','inherit');
+		}
+		
+		if ($('preview_guild').get('checked'))
+		{
+			$('previewpost_guild').set('html',editor);
+		}
+	};
+	
+	$$('#preview_guild !> div, #preview_guild').addEvent('click',function()
+	{
+		$('preview_guild').set('checked',!$('preview_guild').get('checked'));
+		previewUpdate_guild();
+	});
+	
+	var previewUpdate = function()
+	{
+		html = $('previewpost').get('html');
+		editor = tinymce.get('myMessage').getContent();
+    	if (html.contains('iframe') && editor.contains('iframe'))
+    	{
+    		$('preview').set('checked',false);
+    		$('preview').set('disabled',true);
+    		$$('#preview !> div').setStyle('color','#A00');
+    	} 
+    	else 
+		{
+			$('preview').erase('disabled');
+			$$('#preview !> div').setStyle('color','inherit');
+		}
+		
+		if ($('preview').get('checked'))
+		{
+			$('previewpost').set('html',editor);
+		}
+	};
+	
+	$$('#preview !> div, #preview').addEvent('click',function()
+	{
+		$('preview').set('checked',!$('preview').get('checked'));
+		previewUpdate();
+	});
+	
+	$$('#publictab > div.de_button').addEvent('click', function(e){
+		$('replysection').reveal();
+		newc = true;
+	});
+
+	$$('#guildtab > div.de_button').addEvent('click', function(e){
+		$('replysection_guild').reveal();
+		newc_guild = true;
+	});
+	
+	fadeAndScroll($$('#publictab .post'));
+
+	var fadeAndScroll_guild = function(posts) {
+		posts.addEvents({
+			mouseenter : function() {
+				this.getElements('footer div').fade(1);
+			},
+			mouseleave : function() {
+				this.getElements('footer div').fade(0.3);
+			}
+		});
+		
+		posts.getElement('.replypost').addEvent('click', function(e){
+			e.stop();
+			$('replysection_guild').reveal();
+			myFx.toElementCenter('replysection_guild');
+		});
+	};
+
+	fadeAndScroll_guild($$('#guildtab .post'));
+	
+	tinyMCE.init({
+			// General options
+			mode : "exact",
+			elements : "myMessage",
+			theme : "advanced",
+			skin : "o2k7",
+			skin_variant : "black",
+			relative_urls : false,
+			setup: function(ed)	{
+				ed.onKeyUp.add(function(ed) {
+					previewUpdate();
+				});
+			},
+			plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+	
+	        // Theme options
+	        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect,|,bullist,numlist|,outdent,indent,blockquote",
+	        theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor|,ltr,rtl|,charmap,emotions,iespell,media,advhr|,hr,removeformat,visualaid",
+	        theme_advanced_buttons3 : "tablecontrols,|,insertlayer,moveforward,movebackward,absolute,|,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak",
+	        theme_advanced_toolbar_location : "top",
+	        theme_advanced_toolbar_align : "left",
+	        theme_advanced_statusbar_location : "bottom",
+		    width: "100%",
+		    height: "400"
+	});
+	
+	tinyMCE.init({
+			// General options
+			mode : "exact",
+			elements : "myMessage_guild",
+			theme : "advanced",
+			skin : "o2k7",
+			skin_variant : "black",
+			setup: function(ed)	{
+				ed.onKeyUp.add(function(ed) {
+					previewUpdate_guild();
+				});
+			},
+			plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+	
+	        // Theme options
+	        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect,|,bullist,numlist|,outdent,indent,blockquote",
+	        theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor|,ltr,rtl|,charmap,emotions,iespell,media,advhr|,hr,removeformat,visualaid",
+	        theme_advanced_buttons3 : "tablecontrols,|,insertlayer,moveforward,movebackward,absolute,|,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak",
+	        theme_advanced_toolbar_location : "top",
+	        theme_advanced_toolbar_align : "left",
+	        theme_advanced_statusbar_location : "bottom",
+		    width: "100%",
+		    height: "400"
+	});
+	
+	$('replypost').addEvent('submit', function(e) {
+		e.stop();
+		if (tinymce.get('myMessage').getContent() != "") {
+			$('myMessage').value = tinymce.get('myMessage').getContent();
+			new Request.HTML({
+				url : $('replypost').get('action'),
+				append : $('publictab'),
+				onSuccess : function() {
+					tinymce.get('myMessage').setContent("");
+					$('replysection').dissolve();
+					fadeAndScroll($$('#publictab .post').getLast());
+					if (newc) {
+						$$('#publictab > div.de_button').destroy();
+					}
+				}
+			}).post($('replypost')).send();
+		}
+	});
+
+	$('replypost_guild').addEvent('submit', function(e) {
+		e.stop();
+		if (tinymce.get('myMessage_guild').getContent() != "") {
+			$('myMessage_guild').value = tinymce.get('myMessage_guild').getContent();
+			new Request.HTML({
+				url : $('replypost_guild').get('action'),
+				append : $('guildtab'),
+				onSuccess : function() {
+					tinymce.get('myMessage_guild').setContent("");
+					$('replysection_guild').dissolve();
+					fadeAndScroll($$('#guildtab .post').getLast());
+					if (newc_guild) {
+						$$('#guildtab > div.de_button').destroy();
+					}
+				}
+			}).post($('replypost_guild')).send();
+		}
+	});  
+});
+JS
+);
+} else {
+$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready',function(){
+	var myFx = new Fx.Scroll(window);
+	
+	var fadeAndScroll = function(posts) {
+		posts.addEvents({
+			mouseenter : function() {
+				this.getElements('footer div').fade(1);
+			},
+			mouseleave : function() {
+				this.getElements('footer div').fade(0.3);
+			}
+		});
+		
+		posts.getElement('.replypost').addEvent('click', function(e){
+			e.stop();
+			$('replysection').reveal();
+			myFx.toElementCenter('replysection');
+		});
+	};
+	
+	newc = false;
+	
+	fadeAndScroll($$('#publictab .post'));
+	
+	var previewUpdate = function()
+	{
+		html = $('previewpost').get('html');
+		editor = tinymce.get('myMessage').getContent();
+    	if (html.contains('iframe') && editor.contains('iframe'))
+    	{
+    		$('preview').set('checked',false);
+    		$('preview').set('disabled',true);
+    		$$('#preview !> div').setStyle('color','#A00');
+    	} 
+    	else 
+		{
+			$('preview').erase('disabled');
+			$$('#preview !> div').setStyle('color','inherit');
+		}
+		
+		if ($('preview').get('checked'))
+		{
+			$('previewpost').set('html',editor);
+		}
+	};
+	
+	$$('#preview !> div, #preview').addEvent('click',function()
+	{
+		$('preview').set('checked',!$('preview').get('checked'));
+		previewUpdate();
+	});
+	
+	$$('#publictab > div.de_button').addEvent('click', function(e){
+		$('replysection').reveal();
+		newc = true;
+	});
+	
+	tinyMCE.init({
+			// General options
+			mode : "exact",
+			elements : "myMessage",
+			theme : "advanced",
+			skin : "o2k7",
+			skin_variant : "black",
+			relative_urls : false,
+			setup: function(ed)	{
+				ed.onKeyUp.add(function(ed) {
+					previewUpdate();
+				});
+			},
+			plugins : "autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+	
+	        // Theme options
+	        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect,|,bullist,numlist|,outdent,indent,blockquote",
+	        theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor|,ltr,rtl|,charmap,emotions,iespell,media,advhr|,hr,removeformat,visualaid",
+	        theme_advanced_buttons3 : "tablecontrols,|,insertlayer,moveforward,movebackward,absolute,|,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak",
+	        theme_advanced_toolbar_location : "top",
+	        theme_advanced_toolbar_align : "left",
+	        theme_advanced_statusbar_location : "bottom",
+		    width: "100%",
+		    height: "400"
+	});
+	
+	$('replypost').addEvent('submit', function(e) {
+		e.stop();
+		if (tinymce.get('myMessage').getContent() != "") {
+			$('myMessage').value = tinymce.get('myMessage').getContent();
+			new Request.HTML({
+				url : $('replypost').get('action'),
+				append : $('publictab'),
+				onSuccess : function() {
+					tinymce.get('myMessage').setContent("");
+					$('replysection').dissolve();
+					fadeAndScroll($$('#publictab .post').getLast());
+					if (newc) {
+						$$('#publictab > div.de_button').destroy();
+					}
+				}
+			}).post($('replypost')).send();
+		}
+	});
+});
+JS
+);
+}

@@ -1,0 +1,30 @@
+<?php
+if ($this->post)
+{
+	$class = $this->identity['class'];
+	$name = $this->identity['name'];
+	$date = $this->post['time']->format('g:ia');
+	$text = stripslashes(str_replace('\n',"",$this->post['text']));
+	$i = $this->post['count'];
+	echo <<<EOHTML
+<section class=post>
+	<aside>
+		<img class='wow-icon' src='{$this->identity['thumb']}' />
+		<div class=$class>$name</div>
+	</aside>
+	<div style="overflow:auto;">
+		<header>
+			<div class=num>#$i</div>
+			<div class=time>$date</div>
+		</header>
+		<article>
+			{$text}
+		</article>
+		<footer>
+			<div class='de_button replypost'>REPLY</div>
+		</footer>
+	</div>
+</section>
+EOHTML;
+}
+?>

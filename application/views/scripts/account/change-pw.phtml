@@ -1,0 +1,59 @@
+<?php
+$accountLink = $this->url(array('controller' => 'account'),null,true);
+echo <<<EOHTML
+<section class='lift postframe'>
+	<header>
+		<h1><a href=$accountLink>Account Management</a>  &raquo;  Change Password</h1>
+	</header>
+	<article>
+		<form id=changepwform>
+		<table>
+		<tr>
+			<th>Current Password</th>
+			<td><input id=oldpw type=password name=oldpw class="required" /></td>
+		</tr>
+		<tr>
+			<th>New Password</th>
+			<td><input id=newpw type=password name=newpw class="required minLength:7" /></td>
+		</tr>
+		<tr>
+			<th>Confirm Password</th>
+			<td><input id=newpw2 type=password name=newpw2 class="required minLength:7" /></td>
+		</tr>
+		<tr>
+			<th></th>
+			<td><input type=submit value="Submit"  class='de_button'/></td>
+		</tr>
+		</table>
+		</form>
+	</article>
+</section>
+EOHTML;
+ 
+$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready', function() {
+
+	var pwVal = new Form.Validator($('changepwform'));
+	
+	$$('input[type=submit]').addEvent('click', function(e) {
+		e.stop();
+		if (!pwVal.validate()) {
+			DEmessenger('All fields are required','Passwords must be at least 7 characters long.');
+		}
+		else if ($('newpw').value != $('newpw2').value)
+		{
+			DEmessenger('Passwords do not match', 'Please try again.');
+		}
+		else
+		{
+			new Request({
+				url : '',
+				method: 'post',
+				data: 'newpw=' + $('newpw').value + '&oldpw=' + $('oldpw').value,
+				evalScripts: true
+			}).send();
+		}
+	});
+});
+JS
+);

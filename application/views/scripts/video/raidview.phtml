@@ -1,0 +1,79 @@
+<?php
+echo <<<EOHTML
+<section class='postframe lift' id='rv-list'>
+	<header>
+		<img src='/img/raidview.png'/>
+	</header>
+	<article>
+EOHTML;
+while ($vid = mysqli_fetch_array($this->raidviews)) {
+	$url = $this->url(array('controller' => 'video', 'action' => 'raidview-setup', 'id' => $vid['id']),null,true);
+	$img = "/img/raidview/thumb_$vid[id].png";
+	$title = $vid['title'];
+	$desc = $vid['description'];
+	
+	echo <<<EOHTML
+	<section rel='$url'>
+		<a href='#'><img src='$img'/></a>
+		<h1><a href='#'>$title</a></h1>
+		<p>
+			$desc
+		</p>
+	</section>
+EOHTML;
+}
+$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready',function()
+{
+	var rev = new Fx.Reveal($$('.rv-setup-form'));
+	
+	$$('#rv-list article section a').addEvent('click',function(e)
+	{
+		e.stop();
+		if (this.getParent('section').get('rel') != 'false')
+		new Request.HTML(
+		{
+			url: this.getParent('section').get('rel'),
+			append: this.getParent('section'),
+			onSuccess: function()
+			{
+				$$('.rv-setup-form').reveal();
+				this.getParent('section').set('rel','false');
+			}.bind(this)
+		}).send();
+	});
+});
+JS
+);
+?>
+</article>
+</section>
+
+<style>
+#rv-list > header {
+	text-align: center;
+}
+#rv-list > article > section {
+	overflow: auto;
+	border: 1px inset white;
+	margin: 10px;
+}
+#rv-list > article > section img {
+	float: left;
+}
+#rv-list > article > section h1 {
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 10px 0;
+}
+#rv-list > article > section p {
+	margin: 10px 30px 10px 260x;
+}
+.rv-setup-form {
+	display: none;
+	clear: left;
+	margin: 20px auto;
+	width: 450px;
+}
+</style>

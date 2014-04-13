@@ -1,0 +1,129 @@
+<?php 
+	$this->minifyHeadScript()
+		->prependScript("window.location='/index/incompatible';",'text/javascript',array('conditional' => 'lt IE 9'))
+		->prependFile('http://static.wowhead.com/widgets/power.js')
+		->prependFile($this->baseUrl().'/js/dishonorelite.js')
+		->prependFile($this->baseUrl().'/js/mootools-more.js')
+		->prependFile($this->baseUrl().'/js/mootools-core.js')
+		->prependScript("var baseUrl = '{$this->baseUrl()}';")
+		->prependScript(<<<JS
+(function(){
+  // if firefox 3.5+, hide content till load (or 3 seconds) to prevent FOUT
+  var d = document, e = d.documentElement, s = d.createElement('style');
+  if (e.style.MozTransform === ''){ // gecko 1.9.1 inference
+    s.textContent = 'body{visibility:hidden}';
+    var r = document.getElementsByTagName('script')[0];
+    r.parentNode.insertBefore(s, r);
+    function f(){ s.parentNode && s.parentNode.removeChild(s); }
+    addEventListener('load',f,false);
+    setTimeout(f,500); 
+  }
+})();
+JS
+	);
+	$this->minifyHeadLink(array('rel' => 'icon','href'=>'/img/favicon.ico', 'type' => 'ico'),'PREPEND')
+		->prependStylesheet('http://fonts.googleapis.com/css?family=Droid+Sans:400,700')
+		->prependStylesheet($this->baseUrl() . '/css/style.css');
+	echo $this->doctype();
+?>
+<html>
+<head>
+<?php 
+	echo $this->headTitle();
+	echo $this->headMeta()->setIndent(8);
+	echo $this->minifyHeadLink();
+?>
+</head>
+<body>
+<header id=sitehead class=shadow>
+	<div class=header_cont>
+		<img src="<?= $this->baseUrl() ?>/img/emblem.png" style="float: left; width: 90px; position: relative; left: 20px; top: 5px;">
+		<h1>
+			<a href="<?= $this->url(array('controller' => 'index', 'action' => 'index'), null, true);?>">#</a>
+		</h1>
+		<?= $this->login() ?>
+	</div>
+</header>
+<div id=container>
+	<?if ($this->hideSlideshow == null) {
+		echo $this->slideshow();
+	}?>
+	<nav id=main_nav class=shadow>
+		<ul>
+			<a href="<?= $this->url(array('controller' => 'index', 'action' => 'index'), null, true);?>"><li>Home</li></a>
+			<a href="<?= $this->url(array('controller' => 'forum', 'action' => 'index'), null, true);?>"><li>Forums</li></a>
+			<a href="<?= $this->url(array('controller' => 'application', 'action' => 'index'), null, true);?>"><li>Apply</li></a>
+			<a class=disabled_link href=""><li>Blogs</li></a>
+			<a class=disabled_link href=""><li>Videos</li></a>
+			<a href="<?= $this->url(array('controller' => 'armory', 'action' => 'index'), null, true);?>"><li>Armory</li></a>
+			<a href="<?= $this->url(array('controller' => 'index', 'action' => 'mumble'), null, true);?>"><li>Mumble</li></a>
+			<a href="<?= $this->url(array('controller' => 'index', 'action' => 'addons'), null, true);?>"><li>Addons</li></a>
+		</ul>
+	</nav>
+	<div id=content class=shadow>
+		<?php if ($this->hideSide == null) { ?>
+		<aside id=sidebar>
+			<section id=progression class=lift>
+				<header>
+					<h1>Progression</h1>
+				</header>
+				<article>
+					<?= $this->progression() ?>
+				</article>
+			</section>
+			<?= $this->openapps(); ?>
+			<section id=recent_posts class=lift>
+				<header>
+					<h1>Current Topics</h1>
+				</header>
+				<article>
+					<?php $posts = $this->recentPosts();
+					while ($post = mysqli_fetch_array($posts))
+						echo $this->partial('partials/recentpost.phtml', array('post' => $post));
+					?>
+				</article>
+			</section>
+			<section id=shoutbox class=lift>
+				<header>
+					<h1>Shoutbox</h1>
+				</header>
+				<article>
+					<?php $shouts = $this->shoutbox();
+					while ($shout = mysqli_fetch_array($shouts))
+						echo $this->partial('partials/shout.phtml', array('shout' => $shout));
+					?>
+				</article>
+					<?= $this->shoutform(); ?>
+			</section>
+			<section id=mumble class=lift>
+				<header>
+					<h1>Mumble</h1>
+				</header>
+				<article>
+					<?= $this->mumble(); ?>
+				</article>
+			</section>
+		</aside>
+		<?php } else { ?>
+		<style>
+			section#page {
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+		<?php } ?>
+		<section id=page>
+			<?php echo $this->layout()->content; ?>
+		</section>		
+	</div>
+<footer id=footer>
+	<p>&copy; 2011 Dishonor Elite - US Proudmoore</p>
+	<p>Powered by Zend Framework | Built & designed by <a href=''>ginovva320</a></p>
+</footer>
+</div>
+<section id=messenger>
+</section>	
+</body>
+<?php echo $this->minifyHeadScript(); ?>
+<script src="<?= $this->baseUrl().'/js/tiny_mce/tiny_mce.js' ?>"></script>
+</html>

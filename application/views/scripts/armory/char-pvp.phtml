@@ -1,0 +1,131 @@
+<?php
+$teams = array('2v2' => null, '3v3' => null, '5v5' => null);
+if ($this->teams)
+{
+	foreach ($this->teams as $team)
+	{
+		$teams[$team['size']] = <<<EOHTML
+		<table class='arena-team'>
+			<thead>
+				<tr>
+					<th colspan='2'>$team[name]</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>Team Rating</th>
+					<td>$team[teamRating]</td>
+				</tr>
+				<tr>
+					<th>Personal Rating</th>
+					<td>$team[personalRating]</td>
+				</tr>
+			</tbody>
+		</table>
+EOHTML;
+	}
+}
+echo <<<EOHTML
+<div id='hks'>
+	<img class='wow-icon' src='http://us.media.blizzard.com/wow/icons/36/achievement_pvp_p_06.jpg'/><br/>{$this->hks} Honorable Kills
+</div>
+<table id='arena-teams' class='lift'>
+	<thead>
+		<tr>
+			<th colspan='3'>Arena Teams</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><div class='team-label'>2v2</div>{$teams['2v2']}</td>
+			<td><div class='team-label'>3v3</div>{$teams['3v3']}</td>
+			<td><div class='team-label'>5v5</div>{$teams['5v5']}</td>
+		</tr>
+	</tbody>
+</table>
+<table id='pvp-bgs' class='lift'>
+	<thead>
+		<tr>
+			<th colspan='3'>Rated Battlegrounds &mdash; Rating: {$this->bgrating}</th>
+		</tr> 
+		<tr>
+			<th>Battleground</th>
+			<th>Won</th>
+			<th>Played</th>
+		</tr>
+	</thead>
+	<tbody>
+EOHTML;
+foreach ($this->bgs as $bg)
+{
+	echo <<<EOHTML
+		<tr>
+			<th>$bg[name]</th>
+			<td>$bg[won]</th>
+			<td>$bg[played]</th>
+		</tr>
+EOHTML;
+}
+echo "</tbody></table>";
+?>
+<style>
+#hks {
+	font-size: 15px;
+	text-align: center;
+	font-weight: bold;
+	width: 200px;
+	margin: 10px auto;
+}
+#pvp-bgs {
+	width: 100%;
+	margin: 20px auto;
+	border-collapse: collapse;
+	border: 2px outset #0398FF;
+}
+#pvp-bgs > thead th {
+	font-size: 17px;
+	border-bottom: 1px inset #0398FF;
+}
+#pvp-bgs thead tr:nth-child(2) th {
+	font-size: 14px;
+}
+#pvp-bgs thead tr:nth-child(2) th:first-child {
+	text-align: left;
+}
+#pvp-bgs tbody th {
+	text-align: left;
+}
+#pvp-bgs tbody td {
+	text-align: center;
+}
+#pvp-bgs tbody tr:nth-child(even) {
+	background: #222;
+}
+#arena-teams {
+	width: 100%;
+	margin: 20px auto;
+	border-collapse: collapse;
+	border: 2px outset #0398FF;
+}
+#arena-teams > thead th {
+	font-size: 17px;
+}
+#arena-teams > tbody > tr > td {
+	border: 1px inset #0398FF;
+	background: #222;
+	width: 33%;
+	text-align: center;
+}
+.arena-team {
+	margin: 10px auto;
+}
+.arena-team thead th {
+	font-weight: bold;
+	font-size: 15px;
+	text-shadow: 1px 1px 1px #a00;
+}
+.team-label {
+	font-size: 50px;
+	opacity: 0.4;
+}
+</style>

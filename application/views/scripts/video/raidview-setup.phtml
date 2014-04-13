@@ -1,0 +1,49 @@
+<?php 
+$url = $this->url(array('controller' => 'video', 'action' => 'raidview-watch'),null,true);
+echo <<<EOHTML
+<form action='$url' method='GET' class='rv-setup-form'>
+	<table>
+		<thead>
+			<tr>
+				<th>Points of View</th>
+				<th>Tracks</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<ul>
+EOHTML;
+
+while ($pov = mysqli_fetch_array($this->videos))
+{
+	echo "<li><input type='checkbox' name='videos[]' value='$pov[id]' checked/> <span class='$pov[class]'>$pov[name]</span> &ndash; $pov[role]</li>";
+}
+
+echo <<<EOHTML
+		</ul>
+	</td>
+	<td>
+		<ul>
+			<li><input type='radio' name='track' value='0' checked/>Mumble</li>
+EOHTML;
+
+while ($track = mysqli_fetch_array($this->tracks))
+{
+	echo "<li><input type='radio' name='track' value='$track[id]'/>$track[title]</li>";
+}
+
+echo <<<EOHTML
+		</ul>
+	<input type='hidden' name='id' value='{$this->id}'/>
+	</td>
+	<td>
+		<input type='submit' value='Watch' class='de_button'/>
+	</td>
+	</tr>
+	</tbody>
+	</table>
+</form>
+EOHTML;
+?>

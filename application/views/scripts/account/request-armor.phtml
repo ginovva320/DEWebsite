@@ -1,0 +1,28 @@
+<div id=unequip>
+<p>
+	Please unequip the following items to verify that this
+	character is yours:
+</p>
+<?php
+foreach ($this->armor as $armor) {
+	$pic = $armor->getIconIMGtag(36,'moz');
+	$name = $armor->getName();
+	$armorData = $armor->getData();
+	$url = "http://www.wowhead.com/item=$armorData[id]";
+	echo <<<EOHTML
+<div class='app_armor q$armorData[quality]'>
+<a href=$url target=_blank >
+	$pic
+	$name
+</a>
+</div>
+EOHTML;
+}
+echo <<<JS
+<script>
+$('sl1').value = '{$this->slot[0]}';
+$('sl2').value = '{$this->slot[1]}';
+</script>
+JS;
+?>
+</div>

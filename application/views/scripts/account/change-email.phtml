@@ -1,0 +1,56 @@
+<?php
+$accountLink = $this->url(array('controller' => 'account'),null,true);
+echo <<<EOHTML
+<section id=changeemail class=postframe class=lift>
+	<header>
+		<h1><a href=$accountLink>Account Management</a>  &raquo;  Change Email Address</h1>
+	</header>
+	<article>
+		<table>
+			<tr>
+				<th>Current Email Address</th>
+				<td>{$this->email}</td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>New Email Address</th>
+				<td><form id=changeemailform><input id=newemail type=text name=email class="required validate-email" /></form></td>
+			</tr>
+			<tr>
+				<th></th>
+				<td><input type=submit value="Change Email" class='de_button'/></td>
+				<td></td>
+			</tr>
+		</table>
+	</article>
+</section>
+EOHTML;
+ 
+$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready', function() {
+
+	var emailVal = new Form.Validator($('changeemailform'));
+	
+	$$('input[type=submit]').addEvent('click', function(e) {
+		e.stop();
+		if (!emailVal.validate()) {
+			DEmessenger('Invalid Email Address','Please try again.');
+		}
+		else if ($$('#changeemail table tr:first-child td')[0].get('text') == $('newemail').value)
+		{
+			DEmessenger('Same Email Address','Why would you want to do that?');
+		}
+		else
+		{
+			new Request({
+				url : '',
+				method: 'post',
+				data: 'email=' + $('newemail').value,
+				evalScripts: true
+			}).send();
+		}
+	});
+});
+JS
+);
+?>

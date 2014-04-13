@@ -1,0 +1,192 @@
+<section id=app_section class=lift>
+<header>
+	<h1>Dishonor Elite Guild Application</h1>
+</header>
+<form id=guild_application>
+	<ul>
+		<li>
+			<p>
+				Tell us about your self. Be descriptive about your sense of humor
+				and other activities that you do outside of the game.
+			</p>
+		</li><li>
+			<textarea id="app_about" name="about" class="required" rows="3"></textarea>
+		</li>
+		
+		<li>
+			<p>
+				Basic Information - Name, Class, Raid Spec, Age, Gender, Time Zone.
+			</p>
+		</li><li>
+			<textarea id="app_info" name="info" class="required" rows="3"></textarea>
+		</li>
+		
+		<li>
+			<p>
+				Please explain in detail why you have chosen the gear that you currently
+				have (Because it dropped is NOT the answer we are looking for).	Be sure to
+				explain your stat priorities and how that is reflected in your gemming and
+				reforging.
+			</p>
+		</li><li>
+			<textarea id="app_gear" name="gear" class="required" rows="3"></textarea>
+		</li>
+		
+		<li>
+			<p>
+				Give us a link to a screenshot(s) of UI, showing all functional keybinds and
+				raid frames. If hidden, please state ALL binds.
+			</p>
+		</li><li>
+			<textarea id="app_interface" name="interface" class="required" rows="3"></textarea>
+		</li>
+		
+		<li>
+			<p>
+				Please link any World of Logs or WowMeterOnline parses that you have and
+				explain the situation if necessary.
+			</p>
+		</li><li>
+			<textarea id="app_wol" name="wol" class="required" rows="3"></textarea>
+		</li>
+		
+		<li>
+			<p>
+				Please indicate your experience in the following raid(s):
+			</p>
+		</li><li>
+		<table>
+<?php
+	$lastRaid = null; 
+	while ($raid = mysqli_fetch_array($this->raids)) {
+		if ($lastRaid == null || $lastRaid != $raid['r_name']) {
+			echo <<<EOHTML
+			<tr><th colspan=4>{$raid['r_name']}</th></tr>
+			<tr><td></td><td>None</td><td>Some</td><td>Cleared</td>
+EOHTML;
+		}
+		echo '<tr><td>';
+		echo (strlen(strstr($raid['m_name'],'NORMAL'))>0) ? 'Normal' : 'Heroic';
+		echo '</td>';
+		echo <<<EOHTML
+				<td>
+					<input type=radio name=exp{$raid['m_id']} value=none >
+				</td>
+				<td>
+					<input type=radio name=exp{$raid['m_id']} value=some >
+				</td>
+				<td>
+					<input type=radio name=exp{$raid['m_id']} value=cleared >
+				</td>
+			</tr>
+EOHTML;
+		$lastRaid = $raid['r_name'];
+	}
+?>	
+		</table>
+		</li>
+			
+		<li>
+			<p>
+				What other guilds have you been a part of? Why did you leave/want to leave?
+			</p>
+		</li><li>
+			<textarea id="app_guild" name="guilds" class="required" rows="3"></textarea>
+		</li>
+		
+		<li>
+			<p>
+				Chose 3 Heroic mode encounters from the current raiding content and explain to us
+				(in detail) the mechanics, how you will approach the content, and how your class is
+				used effectively to overcome some of the challenges in that encounter.
+			</p>
+			<p>
+				We do not care what your current progression is. Give us 3 detailed strats, whether
+				you have done the encounters or not.
+			</p>
+		</li><li>
+			<textarea id="app_strats" name="strats" class="required" rows="6"></textarea>
+		</li>
+		
+		<li>
+			<p>
+				Why do you want to join Dishonor Elite? We are not intrested in fly by night
+				memberships here.
+			</p>
+		</li><li>
+			<textarea id="app_join" name="join" class="required" rows="3"></textarea>
+		</li>
+		
+		<li>
+			<p>
+				Do you have a stable computer and connection? I cannot stress this enough.
+				You must have a stable connection.
+			</p>
+		</li><li>
+			<input type="radio" name="internet" value="true">Yes
+			<input type="radio" name="internet" class="validate-one-required" value="false">No
+		</li>
+			
+		<li>
+			<p>
+				Do you have a working microphone? We will be performing a Mumble Interview and questioning
+				you about your in-game mechanics such as gear / gems / spec / enchants as well as boss
+				mechanics. A working mic and Mumble is a MUST! (We recognize that Mumble is not widely used yet,
+				but we expect you to be able to install and configure it. Instructions can be found via the Mumble
+				link above).
+			</p>
+		</li><li>
+			<input type="radio" name="mic" value="true">Yes
+			<input type="radio" name="mic" class="validate-one-required" value="false">No
+		</li>
+		
+		<li>
+			<p>
+				Tell us a joke! The sky is the limit on this you can be as disgusting / racist / sexist / rude
+				and as raunchy as you want with this show us your funny bone.
+			</p>
+		</li><li>
+			<textarea id="app_joke" name="joke" class="required" rows="2"></textarea>
+		</li>
+		
+		<li>
+			<p>
+				Ask us a question. No really ask us. Try to at least be somewhat unique in asking your question.
+			</p>
+		</li><li>
+			<textarea id="app_question" name="question" class="required" rows="1"></textarea>
+		</li>
+		<li>
+			<div class=de_button id=appsubmit>
+			SUBMIT
+			</div>
+		</li>
+	</ul>
+</form>
+</section>
+<?php
+$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready',function() {
+	var guildapp = $('guild_application');
+	var submit = $('appsubmit');
+	var val = new Form.Validator(guildapp);
+
+	submit.addEvent('click',function(e) {
+		e.stop();
+		if (!val.validate() || $$('table input[type=radio]:checked').length != 2) {
+			
+			DEmessenger('All Fields Required','Please review your application and fill out all fields.');
+			$$('.validation-failed, .validation-failed ! tr').tween('background-color','#300');
+			$$('.validation-passed, .validation-passed ! tr').tween('background-color','#222');
+		} else if ({$this->identity['rank']} > 0 && {$this->application}) {
+			DEmessenger('You are in Dishonor Elite','You can\'t apply...');
+		} else {
+			new Request({
+				url : '',
+				evalScripts: true
+			}).post(guildapp).send();
+		}
+	});
+});
+JS
+);

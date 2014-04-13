@@ -1,0 +1,36 @@
+<?php 
+echo "<div id='quests-box'><table id='char-quests'><tbody>";
+for ($i = 0; $i < 30; $i++)
+{
+	$quest = $this->quests[$i];
+	$name = $quest['name'];
+	$url = $quest['url'];
+	echo <<<EOHTML
+	<tr>
+		<td class='q'>
+			<a href='$url'>$name</a>
+		</td>	
+	</tr>
+EOHTML;
+}
+echo "</tbody></table></div>";
+?>
+<style>
+#quests-box {
+	margin: 30px;
+	border: 2px outset #0398FF;
+	box-shadow: 0 0 10px #FFFFFF;
+	height: 800px;
+	overflow: auto;
+}
+#char-quests {
+	border-collapse: collapse;
+	width: 100%;
+}
+#char-quests tr {
+	border: 1px inset #111;
+}
+#char-quests tr:nth-child(even) {
+	background: #222;
+}
+</style>

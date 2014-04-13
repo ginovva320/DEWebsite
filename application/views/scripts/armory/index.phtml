@@ -1,0 +1,157 @@
+<?php 
+$view = $this->url(array('controller' => 'armory', 'action' => 'view'),null,true);
+$roster = $this->url(array('controller' => 'armory', 'action' => 'roster'),null,true);
+$guild = $this->url(array('controller' => 'armory', 'action' => 'guild'),null,true);
+echo <<<EOHTML
+<section class=postframe class=lift>
+	<header>
+		<h1>DE Armory</h1>
+	</header>
+	<article>
+		<section id=armory-options>
+			<header class=selected>
+				<h2><a href=#>View Character Profile</a></h2>
+			</header>
+			<article style=display:block;>
+				<form id=view-char>
+					<table>
+						<tr>
+							<td>Name</td>
+							<td><input type=text name=char-name /></td>
+						</tr>
+						<tr>
+							<td>Realm</td>
+							<td><input type=text name=char-realm value=Proudmoore />
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input type=submit value=Go />
+							</td>
+					</table>
+				</form>
+			</article>
+			<header>
+				<h2><a href=#>View Guild Profile</a></h2>
+			</header>
+			<article>
+				<form id=view-guild>
+					<table>
+						<tr>
+							<td>Name</td>
+							<td><input type=text name=guild-name value='Dishonor Elite'/></td>
+						</tr>
+						<tr>
+							<td>Realm</td>
+							<td><input type=text name=guild-realm value=Proudmoore />
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input type=submit value=Go />
+							</td>
+					</table>
+				</form>
+			</article>
+			<header>
+				<h2><a href=#>View Guild Roster</a></h2>
+			</header>
+			<article>
+				<form id=view-roster>
+					<table>
+						<tr>
+							<td>Name</td>
+							<td><input type=text name=roster-name value='Dishonor Elite'/></td>
+						</tr>
+						<tr>
+							<td>Realm</td>
+							<td><input type=text name=roster-realm value=Proudmoore />
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<input type=submit value=Go />
+							</td>
+					</table>
+				</form>
+			</article>
+		</section>
+	</article>
+</section>
+EOHTML;
+
+$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready',function()
+{
+	$$('#armory-options h2 a').addEvent('click',function(e)
+	{
+		e.stop();
+		var div = this.getParent().getParent().getNext('article');
+		if (div.isDisplayed())
+		{
+			div.dissolve();
+			div.getPrevious('header').removeClass('selected');
+		}
+		else
+		{
+			div.reveal();
+			div.getPrevious('header').addClass('selected');
+		}
+	});
+	
+	$('view-char').addEvent('submit',function(e)
+	{
+		e.stop();
+		if ($$('[name=char-name]')[0].value != '')
+		{
+			if ($$('[name=char-realm]')[0].value != 'Proudmoore')
+				window.location = '$view' + '/name/' + encodeURIComponent($$('[name=char-name]')[0].value) + '/realm/' + encodeURIComponent($$('[name=char-realm]')[0].value);
+			else
+				window.location = '$view' + '/name/' + encodeURIComponent($$('[name=char-name]')[0].value);
+		}
+	});
+	
+	$('view-guild').addEvent('submit',function(e)
+	{
+		e.stop();
+		if ($$('[name=guild-name]')[0].value != '')
+		{
+			if ($$('[name=guild-realm]')[0].value != 'Proudmoore' || $$('[name=guild-name]')[0].value != 'Dishonor Elite')
+				window.location = '$guild' + '/name/' + encodeURIComponent($$('[name=guild-name]')[0].value) + '/realm/' + encodeURIComponent($$('[name=guild-realm]')[0].value);
+			else
+				window.location = '$guild';
+		}
+	});
+	
+	$('view-roster').addEvent('submit',function(e)
+	{
+		e.stop();
+		if ($$('[name=roster-name]')[0].value != '')
+		{
+			if ($$('[name=roster-realm]')[0].value != 'Proudmoore' || $$('[name=roster-name]')[0].value != 'Dishonor Elite')
+				window.location = '$roster' + '/guild/' + encodeURIComponent($$('[name=roster-name]')[0].value) + '/realm/' + encodeURIComponent($$('[name=roster-realm]')[0].value);
+			else
+				window.location = '$roster';
+		}
+	});
+	
+})
+JS
+);
+
+?>
+<style>
+#armory-options article {
+	display: none;
+}
+#armory-options header {
+	margin-bottom: 5px;
+}
+#armory-options header h2 {
+	font-size: 14px;
+	font-weight: 700;
+}
+#armory-options header.selected {
+	text-shadow: 0 0 10px white;
+}
+</style>

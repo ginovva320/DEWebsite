@@ -1,0 +1,42 @@
+<?php
+if (count($this->pets) == 0)
+{
+	echo "<div style='text-align:center;'><em>None</em></div>";
+}
+else 
+{
+	$wh = new WowHead();
+	$i = 0;
+	echo "<table id='char-pets'><tbody><tr><th colspan='3'>Companions</th>";
+	foreach (array_reverse($this->pets) as $pet)
+	{
+		if ($i++ % 3 == 0) {
+			echo "</tr><tr>";
+		}
+		$name = $wh->getData("http://www.wowhead.com/spell=$pet",'name_enus');
+		$icon = $wh->getData("http://www.wowhead.com/spell=$pet",'icon');
+		echo "<td><img class='wow-icon' src='http://us.media.blizzard.com/wow/icons/36/$icon.jpg'/><a target='_blank' href='http://www.wowhead.com/spell=$pet'>$name</a></td>";
+	}
+	echo "</tr></tbody></table>";
+}
+?>
+<style>
+#char-pets {
+	margin: 10px auto;
+	border-collapse: collapse;
+	border: 2px outset #0398FF;
+	box-shadow: 0 0 10px #FFFFFF;
+}
+#char-pets td {
+	border: 1px inset #0398FF;
+	padding: 5px 10px;
+}
+#char-pets td a {
+    bottom: 13px;
+    left: 5px;
+    position: relative;
+}
+#char-pets tr:nth-child(even) td:nth-child(even), #char-pets tr:nth-child(odd) td:nth-child(odd) {
+	background: #222;
+}
+</style>

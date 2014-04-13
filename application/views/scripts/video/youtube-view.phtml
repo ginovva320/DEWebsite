@@ -1,0 +1,16 @@
+<?php
+/* @var $vid Zend_Gdata_YouTube_VideoEntry */
+$vid = $this->vid;
+
+
+echo <<<EOHTML
+<h1>{$vid->getVideoTitle()}</h1>
+<iframe width='853' height='480'
+	src='http://www.youtube-nocookie.com/embed/{$vid->getVideoId()}?rel=0&amp;hd=1' 
+	frameborder='0' allowfullscreen>
+</iframe>
+<p>
+	{$vid->getVideoDescription()}
+</p>
+EOHTML;
+?>

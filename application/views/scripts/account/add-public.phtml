@@ -1,0 +1,140 @@
+<?php
+$base = $this -> baseUrl();
+function get_tz_options()
+{
+  echo '<select name="timezone">';
+  function timezonechoice() {
+    $all = timezone_identifiers_list();
+
+    $i = 0;
+    foreach($all AS $zone) {
+      $zone = explode('/',$zone);
+      $zonen[$i]['continent'] = isset($zone[0]) ? $zone[0] : '';
+      $zonen[$i]['city'] = isset($zone[1]) ? $zone[1] : '';
+      $zonen[$i]['subcity'] = isset($zone[2]) ? $zone[2] : '';
+      $i++;
+    }
+
+    asort($zonen);
+    $structure = '';
+    foreach($zonen AS $zone) {
+      extract($zone);
+      if($continent == 'America') {
+        if(!isset($selectcontinent)) {
+          $structure .= '<optgroup label="'.$continent.'">'; // continent
+        } elseif($selectcontinent != $continent) {
+          $structure .= '</optgroup><optgroup label="'.$continent.'">'; // continent
+        }
+
+        if(isset($city) != ''){
+          if (!empty($subcity) != ''){
+            $city = $city . '/'. $subcity;
+          }
+          if ($city == 'Los_Angeles') {
+          	$structure .= "<option selected value=\"".($continent.'/'.$city)."\">".str_replace('_',' ',$city)."</option>"; //Timezone
+          } else {
+          	$structure .= "<option value=\"".($continent.'/'.$city)."\">".str_replace('_',' ',$city)."</option>"; //Timezone
+          }
+        } else {
+          if (!empty($subcity) != ''){
+            $city = $city . '/'. $subcity;
+          }
+          $structure .= "<option value=\"".$continent."\">".$continent."</option>"; //Timezone
+        }
+
+        $selectcontinent = $continent;
+      }
+    }
+    $structure .= '</optgroup>';
+    return $structure;
+  }
+  echo timezonechoice();
+  echo '</select>';
+}
+?>
+<section id=newpublicacct class="lift postframe">
+	<header>
+		<h1>Public Account</h1>
+		<p>
+			Please fill out the information below to create a public account. These accounts are for those
+			who are not within the guild and wish to participate on our forums as well as apply to be in our guild.
+			Your character must be able to be found on the official WoW armory in order to register.
+		</p>
+	</header>
+<?php
+if ($this->error) {
+	echo '<p style=color:red >' . $this->error . '</p>';
+}
+?>
+	<form id=publicacctform method=post >
+		<table>
+			<tr>
+				<th>Main Character</th>
+				<td>
+				<input id=p_main type=text name=main class="required" value='<?= $this->form['main'] ?>' />
+				</td>
+			</tr>
+			<tr>
+				<th>Server</th>
+				<td>
+				<input id=p_server type=text name=server class="required" value='<?= $this->form['server'] ?>' />
+				</td>
+			</tr>
+			<tr>
+				<th>Email Address</th>
+				<td>
+				<input id=p_email type=text name=email class="required validate-email" value='<?= $this->form['email'] ?>' />
+				</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td>
+				<input id=p_password type=password name=password class="required minLength:7" />
+				</td>
+			</tr>
+			<tr>
+				<th>Confirm Password</th>
+				<td>
+				<input id=p_password2 type=password name=password2 class="required minLength:7" />
+				</td>
+			</tr>
+			<tr>
+				<th>Timezone</th>
+				<td><?php get_tz_options(); ?></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td id=rect ><div><?= $this->recaptcha ?></div></td>
+			</tr>
+			<tr>
+				<th>
+				<img src=<?= $base ?>/img/spinner.gif class=spinner />
+				</th>
+				<td>
+				<input type=submit value="Submit"  class='de_button'/>
+				<input class='cancelform de_button' type=button value=Cancel />
+				</td>
+			</tr>
+		</table>
+	</form>
+</section>
+<?php 
+$this->minifyHeadScript()->appendScript(<<<JS
+	window.addEvent('domready', function() {
+
+		var publicVal = new Form.Validator($('publicacctform'));
+
+		$$('#newpublicacct input[type=submit]').addEvent('click', function(e) {
+			e.stop();
+			if (!publicVal.validate()) {
+				DEmessenger('Invalid Submission','All fields are required. Password must be at least 7 characters long.');
+			} else if ($('p_password').value != $('p_password2').value) {
+				DEmessenger('Passwords do not match', 'Please try again.');
+			} else {
+				$('publicacctform').submit();
+			}
+		});
+	});
+JS
+);
+?>

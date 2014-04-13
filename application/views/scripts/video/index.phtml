@@ -1,0 +1,37 @@
+<?php
+$rvUrl = $this->url(array('controller' => 'video', 'action' => 'raidview'),null,true);
+$ytUrl = $this->url(array('controller' => 'video', 'action' => 'youtube'),null,true); 
+
+echo <<<EOHTML
+<section class=postframe class=lift>
+	<header>
+		<h1>DE Videos</h1>
+	</header>
+	<article>
+		<section>
+			<a href='$rvUrl'><img src='/img/raidview.png'/></a>
+			<div>
+				<p>
+					Suspendisse vitae turpis est. Cras varius sapien et orci
+					sollicitudin sed gravida tellus elementum. Maecenas tempus augue
+					ultricies felis fringilla semper. Suspendisse interdum, purus non
+					accumsan ullamcorper, urna tortor volutpat est, id posuere sem justo
+					vehicula felis. Duis adipiscing adipiscing volutpat.
+				</p>
+			</div>
+		</section>
+		<section>
+			<a href='$ytUrl'><img src='/img/youtube.png'/></a>
+			<div>
+				<p>
+					Suspendisse vitae turpis est. Cras varius sapien et orci
+					sollicitudin sed gravida tellus elementum. Maecenas tempus augue
+					ultricies felis fringilla semper. Suspendisse interdum, purus non
+					accumsan ullamcorper, urna tortor volutpat est, id posuere sem justo
+					vehicula felis. Duis adipiscing adipiscing volutpat.
+				</p>
+			</div>
+		</section>
+	</article>
+</section>
+EOHTML;

@@ -1,0 +1,1569 @@
+@charset "utf-8";
+body,div,h1,h2,h3,p,ul,ol,li,img,header,section,aside,footer,button {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+	font: 12px 'Droid Sans', sans-serif;
+	color: white;
+}
+
+html, body {
+	height: 100%;
+}
+
+header,nav,aside,section,article {
+	display: block;
+}
+
+a {
+	text-decoration: none;
+	color: #0398FF;
+}
+
+a:hover {
+	color: white;
+}
+
+:focus {
+	outline: 0;
+}
+
+.float {
+	float: left;
+}
+
+body {
+    background-attachment: fixed;
+    background-clip: border-box;
+    background-color: #0A0A11;
+    background-image: url("/img/bg.png");
+    background-origin: padding-box;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+.shadow {
+	-moz-box-shadow: 0px 0px 10px #fff;
+	-webkit-box-shadow: 0px 0px 10px #fff;
+	box-shadow: 0px 0px 10px #fff;
+}
+
+.lift {
+	-moz-box-shadow: 3px 3px 0px #888;
+	-webkit-box-shadow: 3px 3px 0px #888;
+	box-shadow: 3px 3px 0px #888;
+}
+
+a.disabled_link {
+	color: #555;
+	cursor: default;
+}
+
+#footer {
+	margin: 20px auto 5px;
+	text-align: center;
+	padding-top: 5px;
+}
+#footer > p {
+	color: #888;
+}
+#footer > p > a {
+	color: #666;
+	border-bottom: 1px dotted #666;
+}
+div#container {
+	margin: 0 auto;
+	width: 1170px;
+	min-height: 1000px;
+}
+
+div#content {
+	width: 100%;
+	background-color: #000;
+	overflow: auto;
+	background-color: transparent;
+	background-color: rgba(10, 10, 10, 0.6);  
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#990A0A0A,endColorstr=#990A0A0A); 
+	zoom: 1;
+}
+
+section#page {
+	margin-left: 228px;
+	padding: 10px 20px;
+}
+
+#messenger {
+	width: 400px;
+	border-radius: 5px;
+	border: 1px inset black;
+	background: #900;
+	margin-left: -200px;
+	font: 15pt 'Droid Sans';
+	font-weight: 700;
+	position: fixed;
+	top: 100px;
+	left: 50%;
+	box-shadow: 0 0 40px #f00;
+	z-index: 1000;
+	opacity: 0;
+	padding: 10px;
+	text-shadow: 1px 1px 0px black;
+}
+
+#messenger p {
+	margin-top: 5px;
+}
+
+#messenger header {
+	font: 18pt 'Droid Sans';
+	font-weight: 700;
+}
+
+.spinner {
+	opacity: 0;
+}
+
+.postframe {
+	margin: 40px;
+	background: #111;
+	border: 1px inset white;
+	padding: 20px;
+}
+
+.postframe header h1 {
+	padding: 10px;
+	background: #111;
+	border-bottom: 1px inset #666;
+	font-size: 14px;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	text-shadow: 1px 1px 0 #333;
+	margin-bottom: 10px;
+}
+
+.postframe article {
+	padding: 10px;
+	overflow: auto;
+}
+
+.postframe ul {
+	margin: 10px 20px;
+}
+
+.postframe ul li {
+	margin: 5px 0;
+}
+
+.postframe p {
+	margin-bottom: 30px;
+}
+
+.postframe table td,section.postframe table th {
+	padding: 5px;
+}
+
+section .postframetable input[type=text],section .postframe table input[type=password],section
+	.postframe table select {
+	width: 200px;
+	border: 2px inset #555;
+}
+
+ul.bullets li {
+	list-style: disc;
+}
+
+#welcome {
+	clear: right;
+	position: relative;
+	top: 30px;
+	margin: 30px 0;
+}
+
+#welcome>article>div {
+	width: 120px;
+	float: right;
+	margin: 15px 10px;
+}
+
+.postframe article p {
+	margin: 5px 0;
+}
+
+form textarea {
+	font: 12pt 'Droid Sans';
+}
+/*
+.de_button {
+	border: 1px inset white;
+	padding: 5px;
+	background: #00a;
+	box-shadow: 1px 1px 0 #fff;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	cursor: pointer;
+}*/
+.de_button{
+	background-color: #0000aa;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#0000aa), to(#000033)); 
+	background-image: -webkit-linear-gradient(top, #0000aa, #000033); 
+	background-image:    -moz-linear-gradient(top, #0000aa, #000033); 
+	background-image:     -ms-linear-gradient(top, #0000aa, #000033); 
+	background-image:      -o-linear-gradient(top, #0000aa, #000033); 
+	background-image:         linear-gradient(top, #0000aa, #000033);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#0000aa', EndColorStr='#000033'); 
+	border: 1px solid #bcbbb2;
+	border-radius: 3px;
+	box-shadow: 0 0 1px #fff inset, 0 1px 3px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	display: inline-block;
+	font-size: 11px;
+	font-weight: bold;
+	outline: none;
+	padding: 3px 9px;
+	text-decoration: none;
+	text-shadow: 1px 1px 0 #000;
+	text-transform: uppercase;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.de_button:active{
+	box-shadow: 0 0 2px #fff inset, 0 1px 3px rgba(0, 0, 0, 0.5) inset;
+}
+.de_button:hover, .de_button:active{
+	border-color: #999;
+	color: #eef;
+	text-decoration: none;
+}
+header#sitehead {
+	min-width: 1050px;
+	height: 70px;
+	display: block;
+	background-color: #222222;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#222222), to(#000000)); 
+	background-image: -webkit-linear-gradient(top, #222222, #000000); 
+	background-image:    -moz-linear-gradient(top, #222222, #000000); 
+	background-image:     -ms-linear-gradient(top, #222222, #000000); 
+	background-image:      -o-linear-gradient(top, #222222, #000000); 
+	background-image:         linear-gradient(top, #222222, #000000);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#222222', EndColorStr='#000000'); 
+}
+
+.header_cont {
+	width: 1050px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.header_cont>h1 {
+	text-indent: -9999px;
+	float: left;
+	margin-left: 30px;
+}
+
+.header_cont>h1 a {
+	background: url(../img/de_logo_white_small.png) no-repeat;
+	width: 450px;
+	height: 70px;
+	display: block;
+}
+
+.header_cont #user {
+	float: right;
+	margin: 25px 70px 0 0;
+}
+
+.header_cont #user h1 {
+	font: 18px 'Droid Sans';
+	font-weight: 700;
+	text-shadow: 1px 1px 0 #444;
+}
+
+.header_cont #user img {
+	height: 50px;
+	margin-right: 10px;
+	position: relative;
+	top: -15px;
+	float: right;
+}
+
+.header_cont #user #user_links {
+	float: right;
+	position: relative;
+	top: -6px;
+}
+
+.header_cont #loginlinks {
+	float: right;
+	margin: 20px 50px 0 0;
+}
+
+.header_cont #loginlinks li {
+	margin-bottom: 3px;
+}
+
+.header_cont #loginlinks a {
+	font-family: 'Droid Sans';
+	font-weight: 700;
+}
+
+.header_cont #loginform {
+	position: absolute;
+	top: 4px;
+	right: 25px;
+}
+
+.header_cont #loginform input {
+	margin: 3px;
+	height: 12px;
+	width: 140px;
+	background: #222;
+	color: #fff;
+	font-size: 11px;
+	border: 1px inset white;
+}
+
+.header_cont #loginform label {
+	color: #bbb;
+	font-size: 10px;
+}
+
+.header_cont #loginform ul>input {
+	width: 45%;
+	font-size: 8px;
+	cursor: pointer;
+}
+nav#main_nav {
+	margin: 370px 0 35px;
+}
+
+nav#main_nav ul {
+	display: table;
+	width: 100%;
+}
+
+nav#main_nav ul a {
+	display: table-cell;
+	border-left: 2px solid #252525;
+	border-right: 2px solid #676767;
+	background-color: #222222;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#222222), to(#000000)); 
+	background-image: -webkit-linear-gradient(top, #222222, #000000); 
+	background-image:    -moz-linear-gradient(top, #222222, #000000); 
+	background-image:     -ms-linear-gradient(top, #222222, #000000); 
+	background-image:      -o-linear-gradient(top, #222222, #000000); 
+	background-image:         linear-gradient(top, #222222, #000000);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#222222', EndColorStr='#000000');
+}
+
+nav#main_nav ul a:hover {
+	background-color: #222222;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#222222), to(#012255)); 
+	background-image: -webkit-linear-gradient(top, #222222, #012255); 
+	background-image:    -moz-linear-gradient(top, #222222, #012255); 
+	background-image:     -ms-linear-gradient(top, #222222, #012255); 
+	background-image:      -o-linear-gradient(top, #222222, #012255); 
+	background-image:         linear-gradient(top, #222222, #012255);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#222222', EndColorStr='#012255');
+}
+
+nav#main_nav ul a.disabled_link:hover {
+  	background-image: -webkit-gradient(linear, left top, left bottom, from(#222222), to(#330000)); 
+	background-image: -webkit-linear-gradient(top, #222222, #330000); 
+	background-image:    -moz-linear-gradient(top, #222222, #330000); 
+	background-image:     -ms-linear-gradient(top, #222222, #330000); 
+	background-image:      -o-linear-gradient(top, #222222, #330000); 
+	background-image:         linear-gradient(top, #222222, #330000);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#222222', EndColorStr='#330000');
+}
+
+nav#main_nav ul li {
+	padding: 10px 0px;
+	color: inherit;
+	font: 16px 'Droid Sans';
+	font-weight: 700;
+	text-align: center;
+}
+
+nav#main_nav ul a:last-child {
+	border-right: none;
+}
+
+nav#main_nav ul a:first-child {
+	border-left: none;
+}
+#login_box {
+	display: none;
+	position: fixed;
+	top: 40%; 
+	left: 40%;
+	z-index: 100; 
+	width: 300px;
+	height: 200px;
+	background: #222;
+	border: 2px inset white;
+	border-radius: 5px;
+	background: -moz-linear-gradient(#004,#111);
+}
+#login_box form input[type=password], #login_box form input[type=text] {
+	width: 165px;
+}
+#login_box table {
+	margin: 0 auto;
+	width: 100%;
+}
+#login_box header {
+	text-align: center;
+	border-bottom: 1px inset white;
+	padding: 5px;
+}
+#login_box header h1 {
+	font-size: 14px;
+	font-weight: bold;
+}
+#login_box table tbody td {
+	padding: 5px;
+}
+aside#sidebar {
+	width: 218px;
+	padding: 10px;
+	float: left;
+}
+
+aside#sidebar>section {
+	border: 1px solid #0398FF;
+	margin-bottom: 15px;
+	background: #222;
+}
+
+aside#sidebar>section>header {
+	text-align: center;
+	background: #111;
+	padding: 6px;
+	border-bottom: 1px solid #0398FF;
+	padding: 6px;
+}
+
+aside#sidebar>section>header>h1 {
+	font-size: 12px;
+	font-weight: 700;
+}
+
+aside#sidebar>section>article {
+	padding: 6px;
+}
+#progression article>div {
+	height: 55px;
+	margin: 6px;
+}
+
+#progression #firelands {
+	background: url('../img/firelands.png') no-repeat;
+}
+
+#progression .box {
+	width: 110px;
+	height: 22px;
+	margin-left: 80px;
+	background: #000;
+	border: 1px outset white;
+	box-shadow: 0 0 3px black;
+}
+
+#progression .normal {
+	background-color: #0398FF;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to(#000000)); 
+	background-image: -webkit-linear-gradient(top, transparent, #000000); 
+	background-image:    -moz-linear-gradient(top, transparent, #000000); 
+	background-image:     -ms-linear-gradient(top, transparent, #000000); 
+	background-image:      -o-linear-gradient(top, transparent, #000000); 
+	background-image:         linear-gradient(top, transparent, #000000);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='transparent', EndColorStr='#000000'); 
+	height: 22px;
+}
+
+#progression .heroic {
+	background-color: red;
+    height: 22px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to(#000000)); 
+	background-image: -webkit-linear-gradient(top, transparent, #000000); 
+	background-image:    -moz-linear-gradient(top, transparent, #000000); 
+	background-image:     -ms-linear-gradient(top, transparent, #000000); 
+	background-image:      -o-linear-gradient(top, transparent, #000000); 
+	background-image:         linear-gradient(top, transparent, #000000);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='transparent', EndColorStr='#000000'); 
+}
+
+table.progression_table tr td.defeated {
+	background: url('/img/skull_16.png') no-repeat;
+	width: 16px;
+}
+table.progression_table tr td.not_defeated {
+	opacity: 0.3;
+}
+table.progression_table {
+	background: black;
+	padding: 5px;
+	border: 1px inset white;
+	border-radius: 5px;
+}
+
+#progression article>div {
+	padding-top: 5px;
+	min-height: 60px;
+}
+
+#progression article>div>div {
+	margin-bottom: 5px;
+}
+.deathknight {
+	color: #C41F3B;
+}
+
+.druid {
+	color: #FF7D0A;
+}
+
+.hunter {
+	color: #ABD473;
+}
+
+.mage {
+	color: #69CCF0;
+}
+
+.paladin {
+	color: #F58CBA;
+}
+
+.priest {
+	color: #FFFFFF;
+}
+
+.rogue {
+	color: #FFF569;
+}
+
+.shaman {
+	color: #2459FF;
+}
+
+.warlock {
+	color: #9482C9;
+}
+
+.warrior {
+	color: #C79C6E;
+}
+#recent_posts>article>section {
+	padding: 6px;
+	border-bottom: 1px outset #666666;
+}
+
+#recent_posts>article>section>footer {
+	font-size: 9px;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	margin-top: 4px;
+	text-align: right;
+}
+
+#recent_posts>article>section>footer>span {
+	text-shadow: 1px 1px 1px black;
+}
+
+#recent_posts article section:nth-child(odd) {
+	background: #222;
+}
+
+#recent_posts article section:nth-child(even) {
+	background: #333;
+}
+
+aside#sidebar section#recent_posts>article {
+	padding: 0;
+	overflow: auto;
+	max-height: 300px;
+}
+#shoutbox>article>section {
+	padding: 6px;
+}
+
+#shoutbox>article>section>footer {
+	font-size: 9px;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	margin-top: 4px;
+	text-align: right;
+}
+
+#shoutbox>article>section>footer>span {
+	text-shadow: 1px 1px 1px black;
+}
+
+#shoutbox article section:nth-child(odd) {
+	background: #222;
+}
+
+#shoutbox article section:nth-child(even) {
+	background: #333;
+}
+
+aside#sidebar section#shoutbox>article {
+	padding: 0;
+	overflow: auto;
+	max-height: 300px;
+}
+
+#shoutbox form input {
+	width: 95%;
+	margin: 4px;
+	box-shadow: 0 0 2px #ccc;
+	background: #222;
+	color: white;
+}
+
+#shoutbox form {
+	text-align: center;
+	background: #000;
+}
+article.forum {
+	margin-bottom: 20px;
+	border: 1px inset white;
+}
+
+article.forum table thead th {
+	font: 18px 'Droid Sans';
+	font-weight: 700;
+	padding: 10px 20px;
+	background: url("../img/blk_bg.png") repeat-x;
+	border-bottom: 1px solid #999;
+	text-align: left;
+	text-shadow: 0 0 5px #d00;
+}
+
+article.forum table thead td {
+	padding: 10px 20px;
+	background: url("../img/blk_bg.png") repeat-x;
+	border-bottom: 1px solid #999;
+	text-align: center;
+}
+
+article.forum table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+article.forum table tbody td {
+	padding: 10px 20px;
+	font-size: 14px;
+	text-shadow: 2px 2px 1px black;
+}
+
+article.forum table tr td:not(:first-child) {
+	text-align: center;
+	width: 20%;
+	font-size: 12px;
+}
+
+article.forum table tbody td p {
+	font-size: 11px;
+	margin-top: 3px;
+}
+
+article.forum table tbody tr:nth-child(odd) {
+	background: #222;
+}
+
+article.forum table tbody tr:nth-child(even) {
+	background: #333;
+}
+
+.newtopic {
+	width: 68px;
+	margin: 0 0 20px;
+	opacity: 0.7;
+}
+
+#newtopicform > table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#newtopicform input[type=text] {
+	margin: 10px auto;
+	width: 92%;
+	color: black;
+}
+
+#newtopicform > table tr {
+	margin-bottom: 4px;
+}
+
+#newtopicform > table th {
+	width: 8%;
+}
+
+#notopics {
+	text-align: center;
+	font-size: 10pt;
+	font-style: italic;
+}
+
+.sticky {
+	position: relative;
+	top: 3px;
+	padding-right: 6px;
+}
+header#topic {
+	border: 2px solid #BBBBBB;
+	margin-bottom: 15px;
+	padding: 5px;
+	overflow: auto;
+	background: url(../img/red_bg.png);
+	opacity: 0.8;
+}
+
+header#topic>h1,section.post header {
+	font-size: 17px;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	padding: 5px 7px;
+	text-shadow: 0 0 5px #000;
+}
+
+header#topic>p {
+	float: right;
+	margin-right: 15px;
+}
+
+header#topic>p>a {
+	text-shadow: 1px 1px 1px #000;
+	line-height: 30px;
+	font-weight: bold;
+}
+
+section.post {
+	border: 1px inset #BBBBBB;
+	margin-bottom: 10px;
+	-moz-box-shadow: 2px 2px 1px #888;
+	-webkit-box-shadow: 2px 2px 1px #888;
+	box-shadow: 2px 2px 1px #888;
+	overflow: auto;
+	background: url('/img/1411.png');
+	padding: 10px;
+}
+
+section.post header {
+	overflow: auto;
+	border-bottom: 1px inset #444;
+	padding: 0 0 5px 0;
+}
+
+section.post aside {
+	width: 100px;
+	float: left;
+	height: 100%;
+	overflow: hidden;
+}
+
+section.post aside > img {
+	width: 60px;
+}
+		
+section.post aside div {
+	font-size: 13px;
+	margin: 5px 0 0 0;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	text-shadow: 0 0 1px #000;
+}
+
+section.post aside div + div {
+	font-size: 12px;
+}
+
+section.post header div.time,section.post header div.num {
+	float: right;
+	margin: 0px 0 0 10px;
+}
+
+section.post header div.time {
+	font: 10px/12px 'Droid-Sans',sans-serif;
+}
+
+section.post header div.num {
+	font-weight: 700;
+}
+
+section.post article {
+	overflow: auto;
+	padding: 10px;
+	min-height: 75px;
+}
+
+section.post article p {
+	margin-bottom: 7px;
+	font-size: 13px;
+}
+
+section.post article ol, section.post article ul {
+    margin: 20px 30px;
+}
+section.post article ol li {
+    list-style: decimal;
+}
+section.post article ol {
+    list-style: decimal;
+} 
+
+section.post article ul li {
+    list-style: disc;
+}
+section.post article ul {
+    list-style: disc;
+} 
+
+section.post footer {
+	overflow: auto;
+	padding-top: 10px;
+}
+
+section.post footer div {
+	float: right;
+	margin: 0 5px;
+	opacity: 0.3;
+}
+#replypost > div, #replypost_guild > div {
+    margin: 20px 10px 10px;
+    padding-bottom: 5px;
+}
+#replysection > h2, #replysection_guild > h2, #newtopicsection > h2 {
+    border-bottom: 1px inset #AAAAAA;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 20px;
+    padding-bottom: 5px;
+}
+#previewpost, #previewpost_guild {
+    border: 1px outset #444444;
+    margin: 10px 20px;
+    background: #001;
+}
+#apply_button {
+	margin: 0 340px;
+}
+/*
+#replysection [type=submit], #replysection_guild [type=submit] {
+	background: none repeat scroll 0 0 #333333;
+	color: white;
+	display: block;
+	font: 14px 'Droid Sans';
+	font-weight: 700;
+	height: 50px;
+	margin: 20px auto;
+}*/
+.recents {
+	border: 2px inset #BBB;
+	background: #222;
+	min-height: 100px;
+	border-collapse: collapse;
+	width: 49%;
+}
+
+.recents thead th {
+	background: #111;
+	border-bottom: 1px solid #999;
+	padding: 6px;
+}
+
+.recents tbody td {
+	padding: 5px;
+	text-shadow: 1px 1px 1px black;
+}
+
+.recents tbody td:not(:first-child) {
+	text-align: center;
+}
+.recents tbody tr:nth-child(odd) {
+	background: #222;
+}
+
+.recents tbody tr:nth-child(even) {
+	background: #333;
+}
+
+.recents .time {
+	color: #bbb;
+	white-space: nowrap;
+}
+
+#WoL {
+	float: left;
+}
+
+#WoL tbody td:first-child {
+	text-align: center;
+}
+
+#WoL .log_kills {
+	color: green;
+	font-weight: 700;
+}
+
+#WoL .log_wipes {
+	color: red;
+}
+
+#mmo {
+	float: right;
+}
+#newaccthead h1 {
+	font: 16px 'Droid Sans';
+	font-weight: 700;
+	text-shadow: 0 0 4px red;
+	margin: 10px;
+}
+
+#newaccttypelinks {
+	margin: 20px auto;
+	width: 300px;
+	text-align: center;
+}
+
+#newaccttypelinks>div {
+	min-height: 100px;
+	border-radius: 5px;
+	border: 1px inset white;
+	background: #222;
+	margin-bottom: 40px;
+	font-size: 14px;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	cursor: pointer;
+	padding: 10px 0;
+}
+
+#newguildacct {
+	height: 360px;
+}
+
+div#unequip {
+	left: 380px;
+	position: relative;
+	top: -280px;
+	width: 340px;
+	opacity: 0;
+}
+
+div#unequip p {
+	font-size: 12pt;
+	margin: 10px;
+	text-align: center;
+	color: yellow;
+}
+
+div#unequip .app_armor span+div {
+	margin: 11px 0 0 50px;
+}
+
+div#unequip .app_armor span {
+	float: left;
+	height: 35px;
+}
+
+div#unequip .app_armor {
+	overflow: auto;
+	margin: 10px auto;
+	height: 39px;
+	line-height: 36px;
+	text-align: center;
+	border: 1px inset white;
+	padding: 3px;
+	border-radius: 2px;
+	background: black;
+	box-shadow: 1px 1px 1px #aaa;
+}
+#applist {
+	border: 1px inset #666;
+	margin-bottom: 30px;
+}
+
+#apptable {
+	border-collapse: collapse;
+	width: 100%;
+	text-align: center;
+}
+
+#apptable thead tr:first-child th {
+	background: none repeat scroll 0 0 #111111;
+	border-bottom: 2px inset #555555;
+	font: 16px 'Droid Sans';
+	font-weight: 700;
+	padding: 10px;
+	text-shadow: 0 0 4px red;
+}
+
+#apptable thead tr:nth-child (2) th {
+	background: none repeat scroll 0 0 #1A1A1A;
+	border-bottom: 2px inset #555555;
+	font: 12px 'Droid Sans';
+	font-weight: 700;
+	padding: 5px;
+	text-shadow: 0 0 4px blue;
+}
+
+#apptable tbody tr:nth-child(odd) {
+	background: #222;
+}
+
+#apptable tbody tr:nth-child(even) {
+	background: #333;
+}
+
+#apptable tbody tr td.rej {
+	text-shadow: 0 0 20px #a00;
+}	
+#apptable tbody tr td.acc {
+	text-shadow: 0 0 20px #0a0;
+}
+#apptable tbody tr td.open {
+	text-shadow: 0 0 20px #aa0;
+}
+
+.postframe .de_button {
+	margin: 10px auto;
+	text-align: center;
+}
+
+#app_section {
+	background: #111;
+	border: 1px white inset;
+}
+
+#app_section header h1 {
+	margin-bottom: 10px;
+}
+
+#app_section header h1 {
+	padding: 10px;
+	font: 16pt 'Droid Sans';
+	font-weight: 700;
+	background: #000;
+	border-bottom: 1px inset #666;
+	text-shadow: 0 0 10px #0398FF;
+}
+
+#guild_application textarea {
+	background: #222;
+	color: #eee;
+	padding: 5px;
+	width: 750px;
+	margin-left: 7px;
+}
+
+#guild_application ul {
+	text-align: center;
+}
+
+#guild_application ul li:nth-child(even) {
+	margin-bottom: 15px;
+	padding-bottom: 20px;
+	border-bottom: 2px inset #888;
+}
+
+#guild_application ul li:nth-child(odd) {
+	margin: 5px 0;
+	padding: 0 10px;
+}
+
+#guild_application table th {
+	background: #222;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+}
+
+#guild_application table td,#guild_application table th {
+	padding: 2px;
+}
+
+#guild_application table {
+	width: 300px;
+	border: 1px inset #ddd;
+	margin: 0 auto;
+}
+
+#appsubmit {
+	margin: 10px auto;
+	width: 60px;
+}
+
+#guild_application tr input[type="radio"]:nth-child (2) {
+	margin: 0 45px 0 10px;
+}
+
+#guild_application tr input[type="radio"]:nth-child (3) {
+	margin: 0 -15px 0 10px;
+}
+
+#guild_application tr input[type="radio"]:nth-child (1) {
+	margin: 0 40px 0 -25px;
+}
+
+#publictab > div.de_button, #guildtab > div.de_button {
+	width: 90px;
+	margin: 0 385px;
+	text-align: center;
+}
+
+#apphead {
+	border: 1px inset white;
+	padding: 10px;
+	background: url("../img/blk_bg.png") repeat-x scroll 0 4px transparent;
+	border-bottom: 1px inset #999;
+}
+
+#app_reject, #app_accept {
+	float: right;
+	font: 14px 'Droid Sans';
+	font-weight: 700;
+	text-align: center;
+	text-shadow: 1px 1px 0 black;
+	border: 1px inset white;
+	margin-right: 10px;
+	padding: 5px;
+	position: relative;
+	top: -26px;
+	box-shadow: 1px 1px 3px #CCC;
+}
+
+#app_accept {
+	background-color: #002200;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#002200), to(#006600)); 
+	background-image: -webkit-linear-gradient(top, #002200, #006600);
+	background-image:    -moz-linear-gradient(top, #002200, #006600);
+	background-image:     -ms-linear-gradient(top, #002200, #006600);
+	background-image:      -o-linear-gradient(top, #002200, #006600);
+	background-image:         linear-gradient(top, #002200, #006600);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#002200', EndColorStr='#006600');
+}
+
+#app_reject {
+	background-color: #220000;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#220000), to(#660000));
+	background-image: -webkit-linear-gradient(top, #220000, #660000);
+	background-image:    -moz-linear-gradient(top, #220000, #660000);
+	background-image:     -ms-linear-gradient(top, #220000, #660000);
+	background-image:      -o-linear-gradient(top, #220000, #660000);
+	background-image:         linear-gradient(top, #220000, #660000);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#220000', EndColorStr='#660000');
+}
+
+#apphead h1 {
+	font: 18px 'Droid Sans';
+	font-weight: 700;
+	text-align: center;
+	text-shadow: 1px 1px 0 black;
+}
+
+#guildappanswers {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#guildappanswers td,#guildappanswers th {
+	border: 1px inset #999;
+	padding: 5px;
+}
+
+#guildappanswers th {
+	width: 15%;
+}
+
+#guildappanswers tr:nth-child(odd) {
+	background: #111;
+}
+
+#guildappanswers tr:nth-child(even) {
+	background: #222;
+}
+
+#guildappanswers td p {
+	padding: 5px;
+}
+.q,.q a,.color-q,.wowhead-tooltip .q a {
+	color: #FFD100 !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q0,.q0 a,.color-q0,.wowhead-tooltip .q0 a {
+	color: #9D9D9D !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q1,.q1 a,.color-q1,.wowhead-tooltip .q1 a {
+	color: #FFFFFF !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q2,.q2 a,.color-q2,.wowhead-tooltip .q2 a {
+	color: #1EFF00 !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q3,.q3 a,.color-q3,.wowhead-tooltip .q3 a {
+	color: #0070DD !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q4,.q4 a,.color-q4,.wowhead-tooltip .q4 a {
+	color: #A335EE !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q5,.q5 a,.color-q5,.wowhead-tooltip .q5 a {
+	color: #FF8000 !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q6,.q6 a,.color-q6,.wowhead-tooltip .q6 a {
+	color: #E5CC80 !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q7,.q7 a,.color-q7,.wowhead-tooltip .q7 a {
+	color: #E5CC80 !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q8,.q8 a,.color-q8,.wowhead-tooltip .q8 a {
+	color: #FFFF98 !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q9,.q9 a,.color-q9,.wowhead-tooltip .q9 a {
+	color: #71D5FF !important;
+	font-family: Verdana, sans-serif;
+}
+
+.q10,.q10 a,.color-q10,.wowhead-tooltip .q10 a {
+	color: #FF4040 !important;
+	font-family: Verdana, sans-serif;
+}
+#slide_form .errors li {
+	color: red;
+}
+li.slide_sort > img {
+	width: 280px;
+	float: left;
+	margin: 18px 10px;
+	border: 1px inset white;
+}
+li.slide_sort {
+	border: 2px inset white;
+	overflow: auto;
+	cursor: move;
+	box-shadow: 1px 1px 1px #999;
+	background: black;
+}
+li.slide_sort > ul {
+	float: right;
+	width: 280px;
+	margin: 10px 20px 10px 0;
+	border: 1px inset grey;
+	box-shadow: 1px 1px 1px #999;
+}
+li.slide_sort > form {
+	float: right;
+	width: 165px;
+	margin: 10px 20px 10px 0;
+	border: 1px inset grey;
+	box-shadow: 1px 1px 1px #999;
+}
+li.slide_sort > ul li {
+	margin: 5px;
+}
+li.slide_sort > ul li:first-child {
+	border-bottom: 1px inset white;
+}
+li.slide_sort > form > ul {
+	margin: 10px auto;
+}
+li.slide_sort > form > ul li {
+	text-align: center;
+	font: 12px 'Droid Sans';
+	font-weight: 700;
+}
+li.slide_sort > form > ul li .de_button {
+	width: 50px;
+}
+li.slide_sort > div.de_button {
+	background: #300;
+	float: right;
+	margin: 47px 10px 47px 0;
+	width: 25px;
+}
+#editslideart img {
+	width: 700px;
+	margin: 10px 25px;
+	border: 2px inset white;
+}
+#editslide input, #editslide select{
+	width: 250px;
+}
+#editslide textarea {
+	width: 250px;
+	height: 150px;
+}
+
+#addons_table {
+	margin: 0 auto;
+	border-collapse: collapse;
+	text-align: center;
+}
+#addons_table tr {
+	border-top: 1px inset #bbb;
+	border-bottom: 1px inset #bbb;
+}
+#addons_table td, #addons_table th {
+    padding: 10px 20px;
+}
+#mumble article {
+	text-shadow: 1px 1px 1px #000;
+	max-height: 500px;
+	overflow: auto;
+}
+
+#mumble ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+#mumble ul ul {
+	margin: 0 0 0 7px;
+	padding: 0 0 0 7px;
+}
+
+#mumble li {
+	padding-top: 3px;
+}
+
+#mumble span.mumbleChannelViewer-statusIcon {
+	text-indent: -9999px;
+	float: right;
+}
+
+#mumble span.mumbleChannelViewer-user {
+	text-indent: 0;
+	background-position: 0 -16px;
+	float: none;
+}
+
+#mumble span.mumbleChannelViewer-authenticated {
+	background-position: 0 0;
+}
+
+#mumble span.mumbleChannelViewer-suppressed {
+	background-position: 0 -96px;
+}
+
+#mumble span.mumbleChannelViewer-selfDeafened {
+	background-position: 0 -48px;
+}
+
+#mumble span.mumbleChannelViewer-deafened {
+	background-position: 0 -64px;
+}
+
+#mumble span.mumbleChannelViewer-selfMuted {
+	text-indent: 0;
+	background-position: 0 -80px;
+	float: none;
+}
+
+#mumble span.mumbleChannelViewer-muted {
+	background-position: 0 -112px;
+}
+
+#mumble a,#mumble span {
+	background: url('../img/mumbleIcons.png') no-repeat left -32px;
+	padding-left: 20px;
+	display: block;
+	height: 14px;
+	overflow: hidden;
+}
+
+.mumbleChannelViewer-error {
+	background: #ffc url("../img/exclamation.png") no-repeat 4px 5px;
+	color: #000;
+	border: 1px solid #f90;
+	margin: 20px 10px;
+	padding: 5px 5px 5px 25px;
+}
+
+#slideshow-container {
+	height: 300px;
+	width: 1000px;
+	top: 70px;
+	left: 50%;
+	position: absolute;
+	border: 1px solid #bbb;
+	margin: 35px auto 35px -500px;
+	overflow: hidden;
+	-webkit-box-shadow: 0px 0px 50px #0398FF; 
+	-moz-box-shadow: 0px 0px 50px #0398FF; 
+	box-shadow: 0px 0px 50px #0398FF; 
+}
+
+#slideshow-container img {
+	height: 300px;
+	width: 1000px;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+#slideshow-container-controls {
+	margin: 10px 0 0 0;
+	text-align: center;
+}
+
+#slideshow-container-controls img {
+	cursor: pointer;
+	height: 60px;
+	border: 1px solid #bbb;
+	margin: 0 8px 0 0;
+}
+
+#slideshow-container-caption {
+	height: 70px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #000;
+	z-index: 10;
+	overflow: hidden;
+}
+
+#slideshow-container-caption {
+	width: 100%;
+}
+
+#slideshow-container-caption h3 {
+	font-size: 23px;
+	font-weight: bold;
+	color: #fff;
+	padding: 10px 10px 3px 10px;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	text-shadow: 0 0 10px red;
+	letter-spacing: -2px;
+}
+
+#slideshow-container-caption p {
+	color: #eee;
+	font-size: 11px;
+	padding: 0 10px 10px 10px;
+}
+
+.toc-active {
+	border-color: #000;
+}
+
+#next {
+	position: relative;
+	left: 958px;
+	top: 125px;
+	height: 40px;
+	width: 40px;
+	z-index: 20;
+	cursor: pointer;
+	opacity: 0.7;
+	background: url('../img/sprite.png') no-repeat;
+}
+
+#prev {
+	position: relative;
+	left: 0px;
+	top: 85px;
+	height: 40px;
+	width: 40px;
+	z-index: 20;
+	cursor: pointer;
+	opacity: 0.7;
+	background: url('../img/sprite.png') no-repeat;
+	-moz-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	transform: scaleX(-1);
+	filter: fliph;
+}
+.tabbox {
+	border: 1px inset #bbb;
+	padding: 10px;
+	margin-bottom: 15px;
+}
+
+#apptabs {
+	margin: 30px 10px 5px 10px;
+}
+
+#apptabs li {
+	display: inline;
+	cursor: pointer;
+	margin-right: 10px;
+	background: #222;
+	padding: 5px;
+	border: 2px solid #bbb;
+	border-bottom: none;
+	font: 14px 'Droid Sans';
+	font-weight: bold;
+	color: #0398FF;
+}
+
+#apptabs li.tabSelected {
+	color: white;
+	text-shadow: 1px 1px 0 #0398FF;
+	box-shadow: 0 0 6px #0398FF inset;
+}
+
+#open-apps table td {
+    text-align: center;
+    white-space: nowrap;
+}
+#open-apps table tr td:first-child img {
+    width: 40px;
+    margin-top: 1px;
+    border: 1px white inset;
+}
+#open-apps table {
+    border-collapse: collapse;
+}
+#open-apps table tr {
+	border-bottom: 1px outset #666666;
+}
+#open-apps table tr:nth-child(odd) td {
+	background: #333;
+}
+#open-apps table tr td:nth-child(3) {
+	font-size: x-small;
+}
+#open-apps table tr td span {
+	text-shadow:1px 1px 1px black;
+}
+aside#sidebar section#open-apps article {
+	padding: 0;
+}
+#open-apps table {
+	width: 100%;
+}
+.wow-icon {
+	border-color: #B1B2B4 #434445 #2F3032;
+	border-radius: 3px 3px 3px 3px;
+	border-right: 1px solid #434445;
+	border-style: solid;
+	border-width: 1px;
+}

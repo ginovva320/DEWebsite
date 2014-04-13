@@ -1,0 +1,23 @@
+<?php
+$url = $this->url(array('controller' => 'topic', 'action' => 'view','id' => $this->topicId), null, true);
+$lastName = $this->identity['name'];
+$lastClass = $this->identity['class'];
+$lastTime = date('g:ia, M j Y');
+$title = json_encode($this->topicTitle);
+echo <<<JS
+<script type="text/javascript">
+	var tab = '<table><tbody><tr>'
+		+'<td><a href={$url}>' + $title + '</a></td>'
+		+'<td>0</td>'
+		+'<td>0</td>'
+		+'<td><p class=$lastClass>$lastName</p><p>$lastTime</p></td></tr>'
+		+'</tbody></table>';
+	
+	var tr = new Element('div', {
+		html: tab
+	}).getElement('tr');
+	//tr.inject($$('tbody')[0], 'top');
+	window.location.reload();
+</script>
+JS;
+?>

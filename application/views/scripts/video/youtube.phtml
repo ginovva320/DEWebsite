@@ -1,0 +1,29 @@
+<?php
+echo "<table><tbody>";
+foreach ($this->feed as $vid) {
+	$url = $this->url(array('controller' => 'video', 'action' => 'youtube-view', 'id' => $vid->getVideoId()),null,true);
+	$thumbs = $vid->getVideoThumbnails();
+	$img = $thumbs[1]['url'];
+	$title = $vid->getVideoTitle();
+	$desc = $vid->getVideoDescription();
+	
+	echo <<<EOHTML
+	<tr>
+		<td rowspan='2'>
+			<a href='$url'><img src='$img'/></a>
+		</td>
+		<th>
+			<a href='$url'>$title</a>
+		</th>
+	</tr>
+	<tr>
+		<td>
+			<p>
+				$desc
+			</p>
+		</td>
+	</tr>
+EOHTML;
+}
+echo "</tbody></table>";
+?>

@@ -1,0 +1,188 @@
+<?php
+$base = $this -> baseUrl();
+function get_tz_options()
+{
+  echo '<select name="timezone">';
+  function timezonechoice() {
+    $all = timezone_identifiers_list();
+
+    $i = 0;
+    foreach($all AS $zone) {
+      $zone = explode('/',$zone);
+      $zonen[$i]['continent'] = isset($zone[0]) ? $zone[0] : '';
+      $zonen[$i]['city'] = isset($zone[1]) ? $zone[1] : '';
+      $zonen[$i]['subcity'] = isset($zone[2]) ? $zone[2] : '';
+      $i++;
+    }
+
+    asort($zonen);
+    $structure = '';
+    foreach($zonen AS $zone) {
+      extract($zone);
+      if($continent == 'America') {
+        if(!isset($selectcontinent)) {
+          $structure .= '<optgroup label="'.$continent.'">'; // continent
+        } elseif($selectcontinent != $continent) {
+          $structure .= '</optgroup><optgroup label="'.$continent.'">'; // continent
+        }
+
+        if(isset($city) != ''){
+          if (!empty($subcity) != ''){
+            $city = $city . '/'. $subcity;
+          }
+          if ($city == 'Los_Angeles') {
+          	$structure .= "<option selected value=\"".($continent.'/'.$city)."\">".str_replace('_',' ',$city)."</option>"; //Timezone
+          } else {
+          	$structure .= "<option value=\"".($continent.'/'.$city)."\">".str_replace('_',' ',$city)."</option>"; //Timezone
+          }
+        } else {
+          if (!empty($subcity) != ''){
+            $city = $city . '/'. $subcity;
+          }
+          $structure .= "<option value=\"".$continent."\">".$continent."</option>"; //Timezone
+        }
+
+        $selectcontinent = $continent;
+      }
+    }
+    $structure .= '</optgroup>';
+    return $structure;
+  }
+  echo timezonechoice();
+  echo '</select>';
+}
+?>
+<header id=newaccthead>
+<h1>Create An Account</h1>
+</header>
+<section id=newaccttypelinks>
+	<div class=lift id=guildacctlink>
+		<img src=<?= $base ?>/img/guild_stamp.png style='margin:0 10px;' />
+		Guild Member Account
+	</div>
+	<div class=lift id=publicacctlink>
+		<img src=<?= $base ?>/img/wow_icon.png style='margin:0 60px;' />
+		Public Member Account
+	</div>
+</section>
+<section id=newguildacct class="lift postframe" style=display:none; >
+	<header>
+		<h1>Guild Member Account</h1>
+		<p>
+			To sign up for a guild member account, you must have an active character within
+			the Dishonor Elite guild. Your character must be able to be found on the armory.
+			A guild account grants you access to guild forums and more.
+		</p>
+	</header>
+	<form id=guildacctform>
+		<input type=text disabled name=sl1 id=sl1 style=display:none />
+		<input type=text disabled name=sl2 id=sl2 style=display:none />
+		<table>
+			<tr>
+				<th>Main Character</th>
+				<td>
+				<input id=main type=text name=main class="required gin" />
+				</td>
+			</tr>
+			<tr>
+				<th>Email Address</th>
+				<td>
+				<input id=email type=text name=email class="required validate-email gin" />
+				</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td>
+				<input id=password type=password name=password class="required minLength:7 gin" />
+				</td>
+			</tr>
+			<tr>
+				<th>Confirm Password</th>
+				<td>
+				<input id=password2 type=password name=password2 class="required minLength:7 gin" />
+				</td>
+			</tr>
+			<tr>
+				<th>Timezone</th>
+				<td><?php get_tz_options(); ?></td>
+			</tr>
+			<tr>
+				<th>
+				<img src=<?= $base ?>/img/spinner.gif class=spinner />
+				</th>
+				<td>
+					<div class=de_button id=appsubmit style=width:60px; >SUBMIT</div>
+					<div class=de_button id=appcancel style=width:60px; >CANCEL</div>
+				</td>
+			</tr>
+		</table>
+	</form>
+</section>
+<?php 
+$this->minifyHeadScript()->appendScript(<<<JS
+	window.addEvent('domready', function() {
+
+		$('guildacctlink').addEvent('click', function() {
+			$('newaccttypelinks').dissolve();
+			$('newguildacct').reveal();
+		});
+		$('publicacctlink').addEvent('click', function() {
+			window.location = "add-public";
+		});
+		$('appcancel').addEvent('click', function() {
+			$('newguildacct').dissolve();
+			$('newaccttypelinks').reveal();
+		});
+		
+		var guildVal = new Form.Validator($('newguildacct'));
+		var app_gear = false;
+
+		$('appsubmit').addEvent('click', function(e) {
+			e.stop();
+			if (!guildVal.validate()) {
+				DEmessenger('Invalid Submission','All fields are required. Password must be at least 7 characters long.');
+			} else if ($('password').value != $('password2').value) {
+				DEmessenger('Passwords do not match', 'Please try again.');
+			} else if (app_gear == true) {
+				new Request({
+					url : baseUrl + '/account/add-guild/',
+					evalScripts: true,
+					data: 'email='+$('email').value+'&main='+$('main').value+'&password='+$('password').value+'&sl1='+$('sl1').value+'&sl2='+$('sl2').value+'&timezone='+$$('select[name=timezone]')[0].value,
+					onRequest: function() {
+						$$('table img.spinner').fade(1);
+					},
+					onComplete: function() {
+						$$('table img.spinner').fade(0);
+					}
+				}).send();
+			} else {
+				new Request.HTML({
+					url : baseUrl + '/account/request-armor',
+					evalScripts: true,
+					onRequest: function() {
+						$$('table img.spinner').fade(1);
+					},
+					onComplete: function() {
+						$$('table img.spinner').fade(0);
+						if (\$defined($('unequip'))) {
+							$('unequip').fade(1);
+							$$('.gin, select[name=timezone]').set('disabled',true);
+							app_gear = true;
+						}
+					},
+					append: $('newguildacct')
+				}).post($('guildacctform')).send();
+			}
+		});
+		$$('#newaccttypelinks >').addEvents({
+			mouseenter: function() {
+				this.tween('background-color','#333');
+			},
+			mouseleave: function() {
+				this.tween('background-color','#222');
+			}
+		});
+	});
+JS
+);
+?>

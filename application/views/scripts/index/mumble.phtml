@@ -1,0 +1,212 @@
+<style type="text/css">
+/* ===============================
+ * BEGIN DISHONOR ELITE MUMBLE CSS
+ * ===============================
+ */
+#mum_container > .mum_box {
+	border: 1px inset #fff;
+	box-shadow: 2px 2px 2px #888;
+	margin: 0 15px 15px;
+	padding: 20px;
+	background: #222;
+	overflow: auto;
+}
+
+.mum_box img {
+	box-shadow: 0px 0px 20px #888888;
+	margin: 20px;
+}
+
+#mum_title {
+	background: url("http://dl.dropbox.com/u/1101325/de_mumble/logo.png") no-repeat;
+}
+
+#mum_title {
+	text-align: center;
+	text-shadow: 0 0 4px red;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	font-size: 30px;
+	line-height: 135px;
+	font-size: 30px;
+}
+
+#mum_container #contents {
+	float: left;
+	clear: left;
+	border: 1px inset white;
+	margin-right: 20px;
+	background: #333;
+}
+
+#mum_container #contents h3 {
+	text-align: center;
+	font-size: 13px;
+	margin: 7px;
+	font: 14px 'Droid Sans';
+	font-weight: 700;
+	border-bottom: 1px solid #ddd;
+	padding: 4px;
+	margin: 7px;
+}
+
+#contents {
+	text-shadow: 0 0 1px black;
+}
+
+.mum_box header {
+	font-size: 18px;
+	font-family: 'Droid Sans';
+	font-weight: 700;
+	margin-bottom: 8px;
+}
+
+#mum_container #features {
+	margin-left: 150px;
+}
+
+#mum_container #features li {
+	list-style: disc;
+	margin: 3px 0;
+}
+
+#mum_container ul {
+	padding: 0 25px;
+}
+
+#mum_container #contents ul li {
+	margin: 10px;
+}
+
+.mum_box p {
+	padding: 5px 0;
+}
+/* =============================
+ * END DISHONOR ELITE MUMBLE CSS
+ * =============================
+ */
+</style>
+<!-- ================================
+     BEGIN DISHONOR ELITE MUMBLE HTML
+     ================================ -->
+<div id="mum_container">
+	<div class="mum_box">
+		<div id="mum_title">Getting Started with Mumble</div>
+	</div>
+
+	<div class="mum_box">
+		<div id="contents" class="mum_box lift">
+			<h3>Contents</h3>
+			<ul>
+				<li><a href=#download>Download</a></li>
+				<li><a href=#install>Install</a></li>
+				<li><a href=#configure>Configure</a></li>
+				<li><a href=#connect>Connect</a></li>
+				<li><a href=#overlay>Overlay</a></li>
+			</ul>
+		</div>
+		<div>
+			<p>Mumble is an open source, low-latency, high quality voice chat
+				application and is the preferred communication application for
+				Dishonor Elite. Mumble offers many great features, including:</p>
+			<ul id=features>
+				<li>Overlay</li>
+				<li>Low Latency</li>
+				<li>Auto Normalization</li>
+				<li>Security</li>
+				<li>Application Attenuation</li>
+				<li>Positional Audio</li>
+			</ul>
+			<p>
+				To learn more about Mumble, check out the <a
+					href="http://mumble.sourceforge.net/FAQ#What_is_Mumble.3F"> FAQ</a>
+				on their official website.
+			</p>
+		</div>
+	</div>
+
+	<div class="mum_box" id=download>
+		<header>Download</header>
+		<p>
+			Head over to <a href="http://sourceforge.net/projects/mumble/">Mumble's
+				Sourceforge page</a> and download the installer. (Note: If you are
+			using Mac OS X, you will have to browse into the current release and
+			download a precompiled binary).
+		</p>
+	</div>
+
+	<div class="mum_box" id=install>
+		<header>Install</header>
+		<p>Install Mumble with its default options. It is not required to
+			install Murmur on your computer.</p>
+		<img src="http://dl.dropbox.com/u/1101325/de_mumble/install.png" />
+	</div>
+
+	<div class="mum_box" id=configure>
+		<header>Configure</header>
+		<p>Start up Mumble. If the "Mumble Server Connect" window appears,
+			click "Cancel".</p>
+		<p>Go to Configure &raquo; Audio Wizard.</p>
+		<img src="http://dl.dropbox.com/u/1101325/de_mumble/wizard.png" />
+
+		<h4>Device Selection</h4>
+		<p>Make sure that the correct Input and Output Devices are selected so
+			that we can hear you and you can hear us. Positional Audio does not
+			need to be checked. Attenuating applications is highly recommended.</p>
+		<img src="http://dl.dropbox.com/u/1101325/de_mumble/device.png" />
+
+		<h4>Volume Tuning</h4>
+		<p>Follow the instructions to tune your microphone.</p>
+
+		<h4>Voice Activity Detection</h4>
+		<p>This is the most important part of setting up Mumble. Select "Push
+			To Talk", click inside the box, and push your desired PTT key.</p>
+		<img src="http://dl.dropbox.com/u/1101325/de_mumble/ptt.png" />
+
+		<h4>Quality & Notifications</h4>
+		<p>You can adjust the quality settings here, or leave them on
+			recommended values. For notifications settings, you may want to
+			select "Disable Text-To-Speech and use sounds instead".</p>
+		<p>Continue on and finish the wizard.</p>
+	</div>
+
+	<div class="mum_box" id=connect>
+		<header>Connect</header>
+		<p>Go to Server &raquo; Connect.</p>
+		<img src="http://dl.dropbox.com/u/1101325/de_mumble/connect.png" />
+
+		<p>Click on "Add New..." and fill in the information as shown below.
+			Use your main toon's name as "Username".</p>
+		<img src="http://dl.dropbox.com/u/1101325/de_mumble/add.png" />
+
+		<p>Select "Dishonor Elite" and click on "Connect". At this time you
+			will need to enter the provided password and accept the server's
+			certificate.</p>
+
+		<p>You are now connected and should be able to speak using your push
+			to talk key.</p>
+	</div>
+
+	<div class="mum_box" id=overlay>
+		<header>Overlay</header>
+		<p>One of the best features of Mumble is the overlay. The overlay is
+			turned on by default and will appear in WoW as long as you start up
+			Mumble first.</p>
+		<p>Before using Mumble in a raid setting, you will need to enable a
+			filter so that the overlay does not take up your whole screen. By
+			default, the overaly will show all users in your channel. We want to
+			change that to show only those who are currently talking.</p>
+		<p>Go to Configure &raquo; Settings and click on Overlay on the left.
+			Right click around the area by the red dot, and set the Filter to
+			'Only Talking'.</p>
+		<img src="http://dl.dropbox.com/u/1101325/de_mumble/overlay.png" width=90% />
+
+		<p>By dragging the red dot, you can adjust the position of the
+			overlay. You can customize all of the overlay's settings (font,
+			position, size, and more) by right clicking and going to Edit.</p>
+		<p>Note that the overlay is currently incompatible with DirectX 11</p>
+	</div>
+</div>
+<!-- ==============================
+     END DISHONOR ELITE MUMBLE HTML
+     ============================== -->

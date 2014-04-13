@@ -1,0 +1,57 @@
+<?php
+$lastId = -1;
+while ($forum = mysqli_fetch_array($this->forums))
+{
+	if ($forum['fid'] != $lastId && $lastId != -1) {
+		echo <<<EOHTML
+		</tbody>
+	</table>
+</article>
+EOHTML;
+	}
+	if ($forum['fid'] != $lastId) {
+		echo <<<EOHTML
+<article class='forum lift' id=forum$forum[fid]>
+	<table>
+		<thead>
+			<tr>
+				<th>{$forum['ftitle']}</th>
+				<td>Topics</td>
+			</tr>
+		</thead>
+		<tbody>
+EOHTML;
+	}
+	$url = $this->url(array('controller' => 'board', 'action' => 'view', 'id' => $forum['bid']), null, true);
+	echo <<<EOHTML
+		<tr>
+			<td>
+				<a href=$url>{$forum['btitle']}</a>
+				<p>{$forum['description']}</p>
+			</td>
+			<td>
+				$forum[num]
+			</td>
+		</tr>
+EOHTML;
+	$lastId = $forum['fid'];
+}
+
+echo <<<EOHTML
+		</tbody>
+	</table>
+</article>
+EOHTML;
+	
+if ($this->forumId != null)
+{
+	$this->minifyHeadScript()->appendScript(<<<JS
+window.addEvent('domready', function() {
+var myFx = new Fx.Scroll(window);
+myFx.toElement($('forum{$this->forumId}'));
+});
+JS
+	);
+}
+
+?>

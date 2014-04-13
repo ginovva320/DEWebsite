@@ -1,0 +1,48 @@
+<section class='lift postframe'>
+	<header>
+		<h1><a href='<?php echo $this->url(array('controller' => 'admin'), null, true); ?>'>Admin</a>  &raquo;  Edit Slide</h1>
+	</header>
+	<article id=editslideart>
+<?php 
+	$img = $this->baseUrl() . '/img/slideshow/slide_' . $this->slide['a_id'] . '.png';
+	$v4 = $this->slide['visibility'] == 40 ? 'selected' : '';
+	$v3 = $this->slide['visibility'] == 30 ? 'selected' : '';
+	$v2 = $this->slide['visibility'] == 20 ? 'selected' : '';
+	$v1 = $this->slide['visibility'] == 10 ? 'selected' : '';
+	$v0 = $this->slide['visibility'] == 0 ? 'selected' : '';
+	$vp = $this->slide['visibility'] == -1 ? 'selected' : '';
+	echo <<<EOHTML
+	<img src=$img />
+	<form id=editslide method=post>
+	<table>
+	<tr>
+		<th>Title</th>
+		<td><input type=text value="{$this->slide['title']}" name=title /></td>
+	</tr>
+	<tr>
+		<th>Caption</th>
+		<td><textarea name=caption >{$this->slide['caption']}</textarea></td>
+	</tr>
+	<tr>
+		<th>Visibility</th>
+		<td>
+			<select name=vis>
+				<option $v4 value=40>Disabled</option>
+				<option $v3 value=30>Admin</option>
+				<option $v2 value=20>Raider</option>
+				<option $v1 value=10>Guild Member</option>
+				<option $v0 value=0>Public - Logged In</option>
+				<option $vp value=-1>Anyone</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<th></th>
+		<td><input type=submit value=Save /></td>
+	</tr>
+	</table>
+	</form>
+EOHTML;
+?>
+	</article>
+</section>
